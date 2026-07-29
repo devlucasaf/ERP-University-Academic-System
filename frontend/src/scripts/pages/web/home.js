@@ -16,6 +16,7 @@ export function montar(raiz) {
     configurarSombraCabecalho(cabecalho);
     configurarSliderNoticias(raiz);
     configurarFormularioContato(raiz);
+    configurarMegaMenu(raiz);
 }
 
 // --- ABRE E FECHA O MENU HAMBURGER NO MOBILE ---
@@ -124,7 +125,9 @@ function configurarSliderNoticias(raiz) {
 // --- APLICA O ESTADO VISUAL DO BOTAO DE TEMA CONFORME O TEMA ATUAL ---
 function aplicarTemaNoBotao(raiz) {
     const botao = raiz.querySelector("#btnTemaSite");
-    if (!botao) return;
+    if (!botao) {
+        return;
+    }
     const escuro = document.documentElement.getAttribute("data-theme") === "dark";
     botao.classList.toggle("noturno", escuro);
 }
@@ -132,7 +135,9 @@ function aplicarTemaNoBotao(raiz) {
 // --- ALTERNA O TEMA COM ANIMACAO DIVERTIDA ---
 function configurarBotaoTema(raiz) {
     const botao = raiz.querySelector("#btnTemaSite");
-    if (!botao) return;
+    if (!botao) {
+        return;
+    }
 
     botao.addEventListener("click", () => {
         criarOndaDeTema(botao);
@@ -168,6 +173,50 @@ function criarOndaDeTema(botao) {
     document.body.appendChild(onda);
 
     onda.addEventListener("animationend", () => onda.remove(), { once: true });
+}
+
+// --- MEGA-MENU ---
+function configurarMegaMenu(raiz) {
+    const itens = raiz.querySelectorAll("[data-mega]");
+
+    itens.forEach((item) => {
+        const link = item.querySelector(".site-link-com-mega");
+
+        // --- EM TOUCH, ABRE/FECHA O PAINEL ---
+        link?.addEventListener("click", (evento) => {
+            const ehTouch = window.matchMedia("(hover: none)").matches;
+            if (ehTouch) {
+                evento.preventDefault();
+                const abrindo = !item.classList.contains("aberto");
+                fecharTodosMegaMenus(itens);
+                item.classList.toggle("aberto", abrindo);
+                link.setAttribute("aria-expanded", String(abrindo));
+            }
+        });
+    });
+
+    // --- ESCAPE FECHA QUALQUER MEGA-MENU ABERTO ---
+    document.addEventListener("keydown", (evento) => {
+        if (evento.key === "Escape") {
+            fecharTodosMegaMenus(itens);
+        }
+    });
+
+    // --- CLIQUE FORA FECHA TAMBEM ---
+    document.addEventListener("click", (evento) => {
+        const clicouDentro = evento.target.closest("[data-mega]");
+        if (!clicouDentro) {
+            fecharTodosMegaMenus(itens);
+        }
+    });
+}
+
+// --- FECHA TODOS OS MEGA-MENUS E RESETA aria-expanded ---
+function fecharTodosMegaMenus(itens) {
+    itens.forEach((item) => {
+        item.classList.remove("aberto");
+        item.querySelector(".site-link-com-mega")?.setAttribute("aria-expanded", "false");
+    });
 }
 
 // --- FORMULARIO DE CONTATO ---
