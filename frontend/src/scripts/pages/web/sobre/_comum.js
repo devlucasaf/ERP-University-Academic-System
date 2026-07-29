@@ -1,9 +1,3 @@
-// --- COMUM PARA PAGINAS INTERNAS DO SITE ---
-// Contem funcoes reutilizadas pelas paginas /web/**:
-// - navbar (tema claro/escuro, sombra ao rolar)
-// - botao "Portal do Aluno"
-// - botoes internos com data-ir
-
 const CHAVE_TEMA = "theme";
 
 // --- CONFIGURA O TEMA E A SOMBRA DO CABECALHO ---
@@ -17,7 +11,9 @@ export function configurarNavbarPagina(raiz) {
 // --- APLICA O ICONE CORRETO NO BOTAO DE TEMA ---
 function aplicarTemaNoBotao(raiz) {
     const botao = raiz.querySelector("#btnTemaSite");
-    if (!botao) return;
+    if (!botao) {
+        return;
+    }
     const escuro = document.documentElement.getAttribute("data-theme") === "dark";
     botao.classList.toggle("noturno", escuro);
 }
@@ -25,7 +21,9 @@ function aplicarTemaNoBotao(raiz) {
 // --- ALTERNA O TEMA COM ANIMACAO ---
 function configurarBotaoTema(raiz) {
     const botao = raiz.querySelector("#btnTemaSite");
-    if (!botao) return;
+    if (!botao) {
+        return;
+    }
 
     botao.addEventListener("click", () => {
         criarOndaDeTema(botao);
@@ -64,7 +62,9 @@ function criarOndaDeTema(botao) {
 // --- SOMBRA NO CABECALHO AO ROLAR ---
 function configurarSombraCabecalho(raiz) {
     const cabecalho = raiz.querySelector("#siteHeader");
-    if (!cabecalho) return;
+    if (!cabecalho) {
+        return;
+    }
 
     const aoRolar = () => {
         cabecalho.classList.toggle("com-sombra", window.scrollY > 10);

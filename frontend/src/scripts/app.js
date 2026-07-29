@@ -31,6 +31,25 @@ const ROTAS = {
         titulo: "Colégio Áurea"
     },
 
+    // --- PAGINAS INTERNAS DO SITE INSTITUCIONAL ---
+    "#/web/sobre/historia": {
+        modelo: "web/sobre/historia.html",
+        modulo: () => import("./pages/web/sobre/historia.js"),
+        publico: true,
+        modo: "limpo",
+        classe: "site-screen",
+        titulo: "Nossa História — Colégio Áurea"
+    },
+
+    "#/web/sobre/equipe": {
+        modelo: "web/sobre/equipe.html",
+        modulo: () => import("./pages/web/sobre/equipe.js"),
+        publico: true,
+        modo: "limpo",
+        classe: "site-screen",
+        titulo: "Nossa Equipe — Colégio Áurea"
+    },
+
     "#/login": {
         modelo: "auth/login.html",
         modulo: () => import("./pages/auth/login.js"),

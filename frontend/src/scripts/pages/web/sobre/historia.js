@@ -1,4 +1,3 @@
-// --- COMPARTILHA A NAVBAR E O TEMA DA HOME ---
 import {
     configurarNavbarPagina,
     configurarBotoesInternos
