@@ -18,12 +18,12 @@ import java.util.UUID;
 @Builder
 public class ExemplarResponseDTO {
 
-    private UUID           id;
-    private UUID           livroId;
-    private String         livroTitulo;
-    private String         codigoBarras;
-    private String         localizacao;
-    private StatusExemplar status;
-    private LocalDateTime  criadoEm;
+    private UUID            id;
+    private UUID            livroId;
+    private String          livroTitulo;
+    private String          codigoBarras;
+    private String          localizacao;
+    private StatusExemplar  status;
+    private LocalDateTime   criadoEm;
 }
 

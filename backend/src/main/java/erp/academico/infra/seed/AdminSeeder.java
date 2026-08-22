@@ -1,6 +1,6 @@
 package erp.academico.infra.seed;
 
-import erp.academico.modules.usuario.model.RoleUsuario;
+import erp.academico.modules.usuario.model.TipoUsuario;
 import erp.academico.modules.usuario.model.Usuario;
 import erp.academico.modules.usuario.repository.UsuarioRepository;
 
@@ -22,6 +22,7 @@ public class AdminSeeder implements CommandLineRunner {
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
 
+    // --- CRIA O USUÁRIO ADMINISTRADOR INICIAL CASO ELE AINDA NÃO ESTEJA CADASTRADO ---
     @Override
     public void run(String... args) {
         if (usuarioRepository.existsByEmail(ADMIN_EMAIL)) {
@@ -33,7 +34,7 @@ public class AdminSeeder implements CommandLineRunner {
                 .email(ADMIN_EMAIL)
                 .senha(passwordEncoder.encode(ADMIN_SENHA))
                 .ativo(true)
-                .role(RoleUsuario.ADMIN)
+                .role(TipoUsuario.ADMIN)
                 .build();
 
         usuarioRepository.save(admin);

@@ -13,7 +13,9 @@ import erp.academico.modules.biblioteca.reserva.model.Reserva;
 import erp.academico.modules.biblioteca.reserva.model.StatusReserva;
 import erp.academico.modules.biblioteca.reserva.repository.ReservaRepository;
 import erp.academico.modules.usuario.model.Usuario;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -74,6 +76,7 @@ public class ReservaService {
         reordenarFila(r.getLivro().getId());
     }
 
+    // --- LISTA A FILA DE RESERVAS ATIVAS DE UM LIVRO ORDENADA PELA POSIÇÃO ---
     @Transactional(readOnly = true)
     public List<ReservaResponseDTO> filaDoLivro(UUID livroId) {
         return reservaRepository
@@ -81,12 +84,14 @@ public class ReservaService {
                 .stream().map(this::toResponse).toList();
     }
 
+    // --- LISTA AS RESERVAS DE UM USUÁRIO ORDENADAS PELA DATA MAIS RECENTE ---
     @Transactional(readOnly = true)
     public List<ReservaResponseDTO> reservasDoUsuario(UUID usuarioId) {
         return reservaRepository.findByUsuarioIdOrderByDataReservaDesc(usuarioId)
                 .stream().map(this::toResponse).toList();
     }
 
+    // --- REORDENA AS POSIÇÕES DOS USUÁRIOS QUE ESTÃO AGUARDANDO NA FILA DE RESERVA DO LIVRO ---
     private void reordenarFila(UUID livroId) {
         List<Reserva> fila = reservaRepository
                 .findByLivroIdAndStatusOrderByPosicaoFilaAsc(livroId, StatusReserva.AGUARDANDO);
@@ -97,6 +102,7 @@ public class ReservaService {
         reservaRepository.saveAll(fila);
     }
 
+    // --- RECUPERA O USUÁRIO AUTENTICADO OU LANÇA UMA EXCEÇÃO CASO ELE NÃO SEJA IDENTIFICADO ---
     private Usuario usuarioAutenticadoOuFalha() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || !(auth.getPrincipal() instanceof UsuarioDetails ud)) {
@@ -105,6 +111,7 @@ public class ReservaService {
         return ud.getUsuario();
     }
 
+    // --- CONVERTE A ENTIDADE RESERVA EM UM DTO DE RESPOSTA ---
     private ReservaResponseDTO toResponse(Reserva r) {
         return ReservaResponseDTO.builder()
                 .id(r.getId())

@@ -1,6 +1,6 @@
 package erp.academico.dto.auth;
 
-import erp.academico.modules.usuario.model.RoleUsuario;
+import erp.academico.modules.usuario.model.TipoUsuario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -42,6 +42,6 @@ public class RegisterRequestDTO {
     private LocalDate dataNascimento;
 
     @NotNull(message = "A role é obrigatória.")
-    private RoleUsuario role;
+    private TipoUsuario role;
 }
 

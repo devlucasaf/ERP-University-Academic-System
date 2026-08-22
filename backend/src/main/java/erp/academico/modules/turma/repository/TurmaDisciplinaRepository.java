@@ -1,6 +1,7 @@
 package erp.academico.modules.turma.repository;
 
 import erp.academico.modules.turma.model.TurmaDisciplina;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

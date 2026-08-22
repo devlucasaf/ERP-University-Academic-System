@@ -26,6 +26,7 @@ public class MultaController {
 
     private final MultaService multaService;
 
+    // --- LISTA AS MULTAS DE FORMA PAGINADA DE ACORDO COM O STATUS INFORMADO ---
     @GetMapping
     @Operation(summary = "Lista multas por status")
     @PreAuthorize("hasAnyRole('BIBLIOTECARIO','ADMIN','FINANCEIRO')")
@@ -35,12 +36,14 @@ public class MultaController {
         return ResponseEntity.ok(multaService.listarPorStatus(status, pageable));
     }
 
+    // --- LISTA AS MULTAS PENDENTES DE UM USUÁRIO ---
     @GetMapping("/usuario/{usuarioId}/pendentes")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<MultaResponseDTO>> pendentesDoUsuario(@PathVariable UUID usuarioId) {
         return ResponseEntity.ok(multaService.pendentesDoUsuario(usuarioId));
     }
 
+    // --- REGISTRA O PAGAMENTO DE UMA MULTA ---
     @PostMapping("/{id}/pagar")
     @Operation(summary = "Registra pagamento da multa")
     @PreAuthorize("hasAnyRole('BIBLIOTECARIO','ADMIN','FINANCEIRO')")
@@ -48,6 +51,7 @@ public class MultaController {
         return ResponseEntity.ok(multaService.pagar(id));
     }
 
+    // --- CANCELA UMA MULTA PELO SEU IDENTIFICADOR ---
     @PostMapping("/{id}/cancelar")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<MultaResponseDTO> cancelar(@PathVariable UUID id) {

@@ -1,9 +1,9 @@
-package erp.academico.modules.biblioteca.configuracao.service;
+package erp.academico.modules.biblioteca.config.service;
 
 import erp.academico.exception.BusinessException;
-import erp.academico.modules.biblioteca.configuracao.dto.ConfiguracaoBibliotecaDTO;
-import erp.academico.modules.biblioteca.configuracao.model.ConfiguracaoBiblioteca;
-import erp.academico.modules.biblioteca.configuracao.repository.ConfiguracaoBibliotecaRepository;
+import erp.academico.modules.biblioteca.config.dto.ConfiguracaoBibliotecaDTO;
+import erp.academico.modules.biblioteca.config.model.ConfiguracaoBiblioteca;
+import erp.academico.modules.biblioteca.config.repository.ConfiguracaoBibliotecaRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,12 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ConfiguracaoBibliotecaService {
 
-    private final ConfiguracaoBibliotecaRepository repository;
+    private final ConfiguracaoBibliotecaRepository configuracaoBibliotecaRepository;
 
     // --- RETORNA A ÚNICA LINHA DE CONFIGURAÇÃO ---
     @Transactional(readOnly = true)
     public ConfiguracaoBiblioteca obter() {
-        return repository.findAll().stream().findFirst()
+        return configuracaoBibliotecaRepository.findAll().stream().findFirst()
                 .orElseThrow(() -> new BusinessException(
                         "Configuração da biblioteca não inicializada. Verifique a migration V14."));
     }
@@ -35,7 +35,7 @@ public class ConfiguracaoBibliotecaService {
         configuracaoBiblioteca.setMaxRenovacoes(dto.getMaxRenovacoes());
         configuracaoBiblioteca.setValorMultaDia(dto.getValorMultaDia());
 
-        return repository.save(configuracaoBiblioteca);
+        return configuracaoBibliotecaRepository.save(configuracaoBiblioteca);
     }
 }
 

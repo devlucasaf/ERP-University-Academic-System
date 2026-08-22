@@ -16,6 +16,7 @@ public class UsuarioDetailsService implements UserDetailsService {
 
     private final UsuarioRepository usuarioRepository;
 
+    // --- BUSCA O USUÁRIO PELO E-MAIL E RETORNA SEUS DADOS PARA O PROCESSO DE AUTENTICAÇÃO ---
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByEmail(email)

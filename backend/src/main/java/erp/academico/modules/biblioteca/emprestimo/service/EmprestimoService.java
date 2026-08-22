@@ -3,8 +3,8 @@ package erp.academico.modules.biblioteca.emprestimo.service;
 import erp.academico.exception.BusinessException;
 import erp.academico.exception.ResourceNotFoundException;
 import erp.academico.infra.security.UsuarioDetails;
-import erp.academico.modules.biblioteca.configuracao.model.ConfiguracaoBiblioteca;
-import erp.academico.modules.biblioteca.configuracao.service.ConfiguracaoBibliotecaService;
+import erp.academico.modules.biblioteca.config.model.ConfiguracaoBiblioteca;
+import erp.academico.modules.biblioteca.config.service.ConfiguracaoBibliotecaService;
 import erp.academico.modules.biblioteca.emprestimo.dto.EmprestimoRequestDTO;
 import erp.academico.modules.biblioteca.emprestimo.dto.EmprestimoResponseDTO;
 import erp.academico.modules.biblioteca.emprestimo.model.Emprestimo;
@@ -20,7 +20,7 @@ import erp.academico.modules.biblioteca.multa.repository.MultaRepository;
 import erp.academico.modules.biblioteca.reserva.model.Reserva;
 import erp.academico.modules.biblioteca.reserva.model.StatusReserva;
 import erp.academico.modules.biblioteca.reserva.repository.ReservaRepository;
-import erp.academico.modules.usuario.model.RoleUsuario;
+import erp.academico.modules.usuario.model.TipoUsuario;
 import erp.academico.modules.usuario.model.Usuario;
 import erp.academico.modules.usuario.repository.UsuarioRepository;
 
@@ -180,11 +180,13 @@ public class EmprestimoService {
         return toResponse(emprestimoRepository.save(emp));
     }
 
+    // --- LISTA OS EMPRÉSTIMOS DE UM USUÁRIO UTILIZANDO PAGINAÇÃO ---
     @Transactional(readOnly = true)
     public Page<EmprestimoResponseDTO> listarPorUsuario(UUID usuarioId, Pageable pageable) {
         return emprestimoRepository.findByUsuarioId(usuarioId, pageable).map(this::toResponse);
     }
 
+    // --- BUSCA UM EMPRÉSTIMO PELO SEU IDENTIFICADOR ---
     @Transactional(readOnly = true)
     public EmprestimoResponseDTO buscarPorId(UUID id) {
         return toResponse(buscarEntidade(id));
@@ -200,13 +202,13 @@ public class EmprestimoService {
         return vencidos.size();
     }
 
-    // --- HELPERS ---
-
+    // --- BUSCA UM EMPRÉSTIMO PELO IDENTIFICADOR OU LANÇA UMA EXCEÇÃO CASO ELE NÃO SEJA ENCONTRADO ---
     private Emprestimo buscarEntidade(UUID id) {
         return emprestimoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Empréstimo", id));
     }
 
+    // --- LOCALIZA O EXEMPLAR PELO IDENTIFICADOR OU PELO CÓDIGO DE BARRAS INFORMADO ---
     private Exemplar resolverExemplar(EmprestimoRequestDTO dto) {
         if (dto.getExemplarId() != null) {
             return exemplarRepository.findById(dto.getExemplarId())
@@ -219,12 +221,14 @@ public class EmprestimoService {
         throw new BusinessException("Informe o ID do exemplar ou o código de barras.");
     }
 
+    // --- DEFINE O PRAZO DO EMPRÉSTIMO DE ACORDO COM O PERFIL DO USUÁRIO ---
     private int prazoDias(Usuario usuario, ConfiguracaoBiblioteca cfg) {
-        return usuario.getRole() == RoleUsuario.PROFESSOR
+        return usuario.getRole() == TipoUsuario.PROFESSOR
                 ? cfg.getPrazoEmprestimoProfessor()
                 : cfg.getPrazoEmprestimoAluno();
     }
 
+    // --- CALCULA A QUANTIDADE DE DIAS DE ATRASO ENTRE A DATA PREVISTA E A DATA DA DEVOLUÇÃO ---
     private int calcularDiasAtraso(LocalDateTime previsto, LocalDateTime devolvido) {
         if (!devolvido.isAfter(previsto)) {
             return 0;
@@ -255,6 +259,7 @@ public class EmprestimoService {
         ));
     }
 
+    // --- REORDENA AS POSIÇÕES DOS USUÁRIOS QUE ESTÃO AGUARDANDO NA FILA DE RESERVA DO LIVRO ---
     private void reordenarFila(UUID livroId) {
         List<Reserva> fila = reservaRepository
                 .findByLivroIdAndStatusOrderByPosicaoFilaAsc(livroId, StatusReserva.AGUARDANDO);
@@ -265,6 +270,7 @@ public class EmprestimoService {
         reservaRepository.saveAll(fila);
     }
 
+    // --- RECUPERA O USUÁRIO AUTENTICADO OU LANÇA UMA EXCEÇÃO CASO ELE NÃO SEJA IDENTIFICADO ---
     private Usuario usuarioAutenticadoOuFalha() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || !(auth.getPrincipal() instanceof UsuarioDetails ud)) {
@@ -273,6 +279,7 @@ public class EmprestimoService {
         return ud.getUsuario();
     }
 
+    // --- CONVERTE A ENTIDADE EMPRÉSTIMO EM UM DTO DE RESPOSTA, INCLUINDO ATRASO E MULTA ---
     public EmprestimoResponseDTO toResponse(Emprestimo e) {
         int diasAtraso = 0;
         BigDecimal valorMulta = null;
@@ -282,12 +289,12 @@ public class EmprestimoService {
         if (baseComparacao.isAfter(e.getDataDevolucaoPrevista())) {
             diasAtraso = calcularDiasAtraso(e.getDataDevolucaoPrevista(), baseComparacao);
         }
-        Optional<Multa> multaOpt = multaRepository.findAll().stream()
+        Optional<Multa> multaOptional = multaRepository.findAll().stream()
                 .filter(m -> m.getEmprestimo().getId().equals(e.getId()))
                 .findFirst();
 
-        if (multaOpt.isPresent()) {
-            valorMulta = multaOpt.get().getValor();
+        if (multaOptional.isPresent()) {
+            valorMulta = multaOptional.get().getValor();
         }
 
         return EmprestimoResponseDTO.builder()

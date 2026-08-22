@@ -14,7 +14,7 @@ import erp.academico.modules.responsavel.repository.ResponsavelAlunoRepository;
 import erp.academico.modules.responsavel.repository.ResponsavelRepository;
 import erp.academico.modules.usuario.dto.UsuarioRequestDTO;
 import erp.academico.modules.usuario.dto.UsuarioResponseDTO;
-import erp.academico.modules.usuario.model.RoleUsuario;
+import erp.academico.modules.usuario.model.TipoUsuario;
 import erp.academico.modules.usuario.model.Usuario;
 import erp.academico.modules.usuario.service.UsuarioService;
 
@@ -37,16 +37,19 @@ public class ResponsavelService {
     private final AlunoRepository alunoRepository;
     private final UsuarioService usuarioService;
 
+    // --- LISTA OS RESPONSÁVEIS UTILIZANDO PAGINAÇÃO ---
     @Transactional(readOnly = true)
     public Page<ResponsavelResponseDTO> listar(Pageable pageable) {
         return responsavelRepository.findAll(pageable).map(this::toResponse);
     }
 
+    // --- BUSCA UM RESPONSÁVEL PELO SEU IDENTIFICADOR ---
     @Transactional(readOnly = true)
     public ResponsavelResponseDTO buscarPorId(UUID id) {
         return toResponse(buscarEntidade(id));
     }
 
+    // --- CRIA UM RESPONSÁVEL COM UM USUÁRIO ASSOCIADO ---
     @Transactional
     public ResponsavelResponseDTO criar(ResponsavelRequestDTO dto) {
         Usuario usuario = usuarioService.criarEntidade(UsuarioRequestDTO.builder()
@@ -57,7 +60,7 @@ public class ResponsavelService {
                 .telefone(dto.getTelefone())
                 .dataNascimento(dto.getDataNascimento())
                 .ativo(true)
-                .role(RoleUsuario.RESPONSAVEL)
+                .role(TipoUsuario.RESPONSAVEL)
                 .build());
 
         Responsavel responsavel = Responsavel.builder()
@@ -68,6 +71,7 @@ public class ResponsavelService {
         return toResponse(responsavelRepository.save(responsavel));
     }
 
+    // --- ATUALIZA OS DADOS PESSOAIS E O PARENTESCO DE UM RESPONSÁVEL ---
     @Transactional
     public ResponsavelResponseDTO atualizar(UUID id, ResponsavelRequestDTO dto) {
         Responsavel responsavel = buscarEntidade(id);
@@ -84,14 +88,14 @@ public class ResponsavelService {
         return toResponse(responsavelRepository.save(responsavel));
     }
 
+    // --- REMOVE UM RESPONSÁVEL PELO SEU IDENTIFICADOR ---
     @Transactional
     public void deletar(UUID id) {
         Responsavel responsavel = buscarEntidade(id);
         responsavelRepository.delete(responsavel);
     }
 
-    // --- VÍNCULOS COM ALUNOS ---
-
+    // --- LISTA OS ALUNOS VINCULADOS A UM RESPONSÁVEL ---
     @Transactional(readOnly = true)
     public List<ResponsavelAlunoResponseDTO> listarAlunos(UUID responsavelId) {
         buscarEntidade(responsavelId); // valida existência
@@ -101,6 +105,7 @@ public class ResponsavelService {
                 .toList();
     }
 
+    // --- VINCULA UM ALUNO A UM RESPONSÁVEL ---
     @Transactional
     public ResponsavelAlunoResponseDTO vincularAluno(UUID responsavelId, VincularAlunoRequestDTO dto) {
         Responsavel responsavel = buscarEntidade(responsavelId);
@@ -120,6 +125,7 @@ public class ResponsavelService {
         return toVinculoResponse(responsavelAlunoRepository.save(vinculo));
     }
 
+    // --- REMOVE O VÍNCULO ENTRE UM RESPONSÁVEL E UM ALUNO ---
     @Transactional
     public void desvincularAluno(UUID responsavelId, UUID alunoId) {
         ResponsavelAluno vinculo = responsavelAlunoRepository
@@ -129,13 +135,13 @@ public class ResponsavelService {
         responsavelAlunoRepository.delete(vinculo);
     }
 
-    // --- HELPERS ---
-
+    // --- BUSCA UM RESPONSÁVEL PELO IDENTIFICADOR OU LANÇA UMA EXCEÇÃO CASO ELE NÃO SEJA ENCONTRADO ---
     private Responsavel buscarEntidade(UUID id) {
         return responsavelRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Responsável", id));
     }
 
+    // --- CONVERTE A ENTIDADE RESPONSÁVEL EM UM DTO DE RESPOSTA ---
     private ResponsavelResponseDTO toResponse(Responsavel responsavel) {
         Usuario u = responsavel.getUsuario();
         UsuarioResponseDTO usuarioDto = UsuarioResponseDTO.builder()
@@ -160,6 +166,7 @@ public class ResponsavelService {
                 .build();
     }
 
+    // --- CONVERTE O VÍNCULO ENTRE RESPONSÁVEL E ALUNO EM UM DTO DE RESPOSTA ---
     private ResponsavelAlunoResponseDTO toVinculoResponse(ResponsavelAluno v) {
         Aluno a = v.getAluno();
         return ResponsavelAlunoResponseDTO.builder()

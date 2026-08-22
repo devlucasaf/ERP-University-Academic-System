@@ -12,7 +12,7 @@ import erp.academico.modules.professor.repository.ProfessorDisciplinaRepository;
 import erp.academico.modules.professor.repository.ProfessorRepository;
 import erp.academico.modules.usuario.dto.UsuarioRequestDTO;
 import erp.academico.modules.usuario.dto.UsuarioResponseDTO;
-import erp.academico.modules.usuario.model.RoleUsuario;
+import erp.academico.modules.usuario.model.TipoUsuario;
 import erp.academico.modules.usuario.model.Usuario;
 import erp.academico.modules.usuario.service.UsuarioService;
 
@@ -57,7 +57,7 @@ public class ProfessorService {
                 .telefone(dto.getTelefone())
                 .dataNascimento(dto.getDataNascimento())
                 .ativo(true)
-                .role(RoleUsuario.PROFESSOR)
+                .role(TipoUsuario.PROFESSOR)
                 .build());
 
         Professor professor = Professor.builder()

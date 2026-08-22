@@ -12,7 +12,7 @@ import erp.academico.modules.material.repository.MaterialRepository;
 import erp.academico.modules.professor.model.Professor;
 import erp.academico.modules.turma.model.TurmaDisciplina;
 import erp.academico.modules.turma.repository.TurmaDisciplinaRepository;
-import erp.academico.modules.usuario.model.RoleUsuario;
+import erp.academico.modules.usuario.model.TipoUsuario;
 import erp.academico.modules.usuario.model.Usuario;
 
 import lombok.RequiredArgsConstructor;
@@ -44,6 +44,7 @@ public class MaterialService {
                 .map(this::toResponse);
     }
 
+    // --- BUSCA UM MATERIAL PELO SEU IDENTIFICADOR ---
     @Transactional(readOnly = true)
     public MaterialResponseDTO buscarPorId(UUID id) {
         return toResponse(buscarEntidade(id));
@@ -106,14 +107,14 @@ public class MaterialService {
 
     // --- HELPERS ---
 
+    // --- BUSCA UM MATERIAL PELO IDENTIFICADOR OU LANÇA UMA EXCEÇÃO CASO ELE NÃO SEJA ENCONTRADO ---
     private Material buscarEntidade(UUID id) {
-        return materialRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Material", id));
+        return materialRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Material", id));
     }
 
+    // --- BUSCA O VÍNCULO ENTRE TURMA E DISCIPLINA OU LANÇA UMA EXCEÇÃO CASO ELE NÃO SEJA ENCONTRADO ---
     private TurmaDisciplina buscarTurmaDisciplina(UUID id) {
-        return turmaDisciplinaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Vínculo turma/disciplina", id));
+        return turmaDisciplinaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Vínculo turma/disciplina", id));
     }
 
     // --- GARANTE COERÊNCIA ---
@@ -141,6 +142,7 @@ public class MaterialService {
         }
     }
 
+    // --- RECUPERA O USUÁRIO AUTENTICADO OU LANÇA UMA EXCEÇÃO CASO ELE NÃO SEJA IDENTIFICADO ---
     private Usuario usuarioAutenticadoOuFalha() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || !(auth.getPrincipal() instanceof UsuarioDetails ud)) {
@@ -149,14 +151,15 @@ public class MaterialService {
         return ud.getUsuario();
     }
 
+    // --- VALIDA SE O PROFESSOR AUTENTICADO É O RESPONSÁVEL PELA DISCIPLINA DA TURMA ---
     private Professor validarProfessorDaDisciplina(TurmaDisciplina td, Usuario autenticado) {
         Professor professor = td.getProfessor();
         if (professor == null || professor.getUsuario() == null) {
             throw new BusinessException("Vínculo turma/disciplina não possui professor responsável.");
         }
 
-        if (autenticado.getRole() == RoleUsuario.ADMIN
-                || autenticado.getRole() == RoleUsuario.COORDENADOR) {
+        if (autenticado.getRole() == TipoUsuario.ADMIN
+                || autenticado.getRole() == TipoUsuario.COORDENADOR) {
             return professor;
         }
 
@@ -166,9 +169,10 @@ public class MaterialService {
         return professor;
     }
 
+    // --- VERIFICA SE O USUÁRIO AUTENTICADO POSSUI PERMISSÃO PARA EDITAR O MATERIAL ---
     private void validarPodeEditar(Material material, Usuario autenticado) {
-        if (autenticado.getRole() == RoleUsuario.ADMIN
-                || autenticado.getRole() == RoleUsuario.COORDENADOR) {
+        if (autenticado.getRole() == TipoUsuario.ADMIN
+                || autenticado.getRole() == TipoUsuario.COORDENADOR) {
             return;
         }
 
@@ -177,6 +181,7 @@ public class MaterialService {
         }
     }
 
+    // --- CONVERTE A ENTIDADE MATERIAL EM UM DTO DE RESPOSTA ---
     private MaterialResponseDTO toResponse(Material m) {
         return MaterialResponseDTO.builder()
                 .id(m.getId())

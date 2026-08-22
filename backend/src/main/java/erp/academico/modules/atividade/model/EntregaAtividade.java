@@ -23,13 +23,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(
-        name = "entregaAtividade",
-        uniqueConstraints = @UniqueConstraint(
-                name = "ukEntregaAtividadeAtividadeAluno",
-                columnNames = {"atividadeId", "alunoId"}
-        )
-)
+@Table(name = "entregaAtividade", uniqueConstraints = @UniqueConstraint(name = "ukEntregaAtividadeAtividadeAluno", columnNames = {"atividadeId", "alunoId"}))
 public class EntregaAtividade {
 
     @Id

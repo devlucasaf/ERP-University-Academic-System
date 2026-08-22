@@ -1,6 +1,6 @@
 package erp.academico.modules.funcionario.model;
 
-import erp.academico.modules.usuario.model.RoleUsuario;
+import erp.academico.modules.usuario.model.TipoUsuario;
 
 public enum CargoFuncionario {
     COORDENADOR,
@@ -9,8 +9,8 @@ public enum CargoFuncionario {
     FINANCEIRO,
     ADMIN;
 
-    public RoleUsuario toRoleUsuario() {
-        return RoleUsuario.valueOf(this.name());
+    public TipoUsuario toRoleUsuario() {
+        return TipoUsuario.valueOf(this.name());
     }
 }
 

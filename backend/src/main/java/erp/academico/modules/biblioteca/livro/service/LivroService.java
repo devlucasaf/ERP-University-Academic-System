@@ -9,7 +9,9 @@ import erp.academico.modules.biblioteca.livro.dto.LivroRequestDTO;
 import erp.academico.modules.biblioteca.livro.dto.LivroResponseDTO;
 import erp.academico.modules.biblioteca.livro.model.Livro;
 import erp.academico.modules.biblioteca.livro.repository.LivroRepository;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,7 @@ public class LivroService {
         ).map(this::toResponse);
     }
 
+    // --- BUSCA UM LIVRO PELO SEU IDENTIFICADOR ---
     @Transactional(readOnly = true)
     public LivroResponseDTO buscarPorId(UUID id) {
         return toResponse(buscarEntidade(id));
@@ -109,16 +112,18 @@ public class LivroService {
         livroRepository.delete(livro);
     }
 
-    // --- HELPERS ---
+    // --- BUSCA UM LIVRO PELO IDENTIFICADOR OU LANÇA UMA EXCEÇÃO CASO ELE NÃO SEJA ENCONTRADO ---
     public Livro buscarEntidade(UUID id) {
         return livroRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Livro", id));
     }
 
+    // --- VALIDA SE O ISBN INFORMADO NÃO ESTÁ ASSOCIADO A OUTRO LIVRO ---
     private void validarIsbnUnico(String isbn, UUID idAtual) {
         if (isbn == null || isbn.isBlank()) {
             return;
         }
+
         livroRepository.findByIsbn(isbn).ifPresent(existente -> {
             if (idAtual == null || !existente.getId().equals(idAtual)) {
                 throw new BusinessException("Já existe um livro cadastrado com o ISBN informado.");
@@ -126,10 +131,12 @@ public class LivroService {
         });
     }
 
+    // --- REMOVE OS ESPAÇOS EXCEDENTES E CONVERTE VALORES VAZIOS EM NULO ---
     private String normalizar(String v) {
         return (v == null || v.isBlank()) ? null : v.trim();
     }
 
+    // --- CONVERTE A ENTIDADE LIVRO EM UM DTO DE RESPOSTA COM A QUANTIDADE DE EXEMPLARES ---
     private LivroResponseDTO toResponse(Livro l) {
         long total = exemplarRepository.countByLivroId(l.getId());
         long disponiveis = exemplarRepository.countByLivroIdAndStatus(l.getId(), StatusExemplar.DISPONIVEL);

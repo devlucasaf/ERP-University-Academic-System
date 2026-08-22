@@ -14,6 +14,7 @@ public class StorageWebConfig implements WebMvcConfigurer {
 
     private final StorageProperties properties;
 
+    // --- CONFIGURA O ACESSO PÚBLICO AOS ARQUIVOS ARMAZENADOS LOCALMENTE ---
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         String publicBaseUrl = properties.getLocal().getPublicBaseUrl();

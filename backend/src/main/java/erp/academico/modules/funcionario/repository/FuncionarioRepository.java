@@ -2,6 +2,7 @@ package erp.academico.modules.funcionario.repository;
 
 import erp.academico.modules.funcionario.model.CargoFuncionario;
 import erp.academico.modules.funcionario.model.Funcionario;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

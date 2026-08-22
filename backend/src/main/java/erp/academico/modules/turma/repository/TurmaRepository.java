@@ -1,6 +1,7 @@
 package erp.academico.modules.turma.repository;
 
 import erp.academico.modules.turma.model.Turma;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

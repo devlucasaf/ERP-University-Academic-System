@@ -1,6 +1,7 @@
 package erp.academico.modules.usuario.dto;
 
-import erp.academico.modules.usuario.model.RoleUsuario;
+import erp.academico.modules.usuario.model.TipoUsuario;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class UsuarioResponseDTO {
     private String          telefone;
     private LocalDate       dataNascimento;
     private Boolean         ativo;
-    private RoleUsuario     role;
+    private TipoUsuario     role;
     private LocalDateTime   criadoEm;
     private LocalDateTime   atualizadoEm;
 }

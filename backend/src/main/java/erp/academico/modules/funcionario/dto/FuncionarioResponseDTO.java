@@ -2,6 +2,7 @@ package erp.academico.modules.funcionario.dto;
 
 import erp.academico.modules.funcionario.model.CargoFuncionario;
 import erp.academico.modules.usuario.dto.UsuarioResponseDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

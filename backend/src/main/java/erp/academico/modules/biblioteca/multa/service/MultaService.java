@@ -6,7 +6,9 @@ import erp.academico.modules.biblioteca.multa.dto.MultaResponseDTO;
 import erp.academico.modules.biblioteca.multa.model.Multa;
 import erp.academico.modules.biblioteca.multa.model.StatusMulta;
 import erp.academico.modules.biblioteca.multa.repository.MultaRepository;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,11 +24,13 @@ public class MultaService {
 
     private final MultaRepository multaRepository;
 
+    // --- LISTA AS MULTAS DE FORMA PAGINADA DE ACORDO COM O STATUS INFORMADO ---
     @Transactional(readOnly = true)
     public Page<MultaResponseDTO> listarPorStatus(StatusMulta status, Pageable pageable) {
         return multaRepository.findByStatus(status, pageable).map(this::toResponse);
     }
 
+    // --- LISTA AS MULTAS PENDENTES DE UM USUÁRIO ---
     @Transactional(readOnly = true)
     public List<MultaResponseDTO> pendentesDoUsuario(UUID usuarioId) {
         return multaRepository.findByEmprestimoUsuarioIdAndStatus(usuarioId, StatusMulta.PENDENTE)
@@ -36,29 +40,31 @@ public class MultaService {
     // --- BAIXA DE PAGAMENTO ---
     @Transactional
     public MultaResponseDTO pagar(UUID multaId) {
-        Multa m = multaRepository.findById(multaId)
+        Multa multa = multaRepository.findById(multaId)
                 .orElseThrow(() -> new ResourceNotFoundException("Multa", multaId));
-        if (m.getStatus() != StatusMulta.PENDENTE) {
+        if (multa.getStatus() != StatusMulta.PENDENTE) {
             throw new BusinessException("Somente multas PENDENTES podem ser pagas.");
         }
 
-        m.setStatus(StatusMulta.PAGA);
-        m.setPagaEm(LocalDateTime.now());
-        return toResponse(multaRepository.save(m));
+        multa.setStatus(StatusMulta.PAGA);
+        multa.setPagaEm(LocalDateTime.now());
+        return toResponse(multaRepository.save(multa));
     }
 
+    // --- CANCELA UMA MULTA CASO ELA AINDA NÃO TENHA SIDO PAGA ---
     @Transactional
     public MultaResponseDTO cancelar(UUID multaId) {
-        Multa m = multaRepository.findById(multaId)
+        Multa multa = multaRepository.findById(multaId)
                 .orElseThrow(() -> new ResourceNotFoundException("Multa", multaId));
-        if (m.getStatus() == StatusMulta.PAGA) {
+        if (multa.getStatus() == StatusMulta.PAGA) {
             throw new BusinessException("Não é possível cancelar multa já paga.");
         }
 
-        m.setStatus(StatusMulta.CANCELADA);
-        return toResponse(multaRepository.save(m));
+        multa.setStatus(StatusMulta.CANCELADA);
+        return toResponse(multaRepository.save(multa));
     }
 
+    // --- CONVERTE A ENTIDADE MULTA EM UM DTO DE RESPOSTA ---
     private MultaResponseDTO toResponse(Multa m) {
         return MultaResponseDTO.builder()
                 .id(m.getId())

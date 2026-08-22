@@ -1,7 +1,7 @@
 package erp.academico.modules.biblioteca.emprestimo.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,8 +17,8 @@ import java.util.UUID;
 @Builder
 public class EmprestimoRequestDTO {
 
-    private UUID exemplarId;
-    private String codigoBarras;
+    private UUID    exemplarId;
+    private String  codigoBarras;
 
     @NotNull
     private UUID usuarioId;

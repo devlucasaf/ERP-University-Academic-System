@@ -1,6 +1,7 @@
 package erp.academico.modules.matricula.dto;
 
 import erp.academico.modules.matricula.model.StatusMatricula;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

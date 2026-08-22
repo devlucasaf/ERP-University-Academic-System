@@ -1,8 +1,9 @@
-package erp.academico.modules.biblioteca.configuracao.dto;
+package erp.academico.modules.biblioteca.config.dto;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,13 +19,16 @@ import java.math.BigDecimal;
 @Builder
 public class ConfiguracaoBibliotecaDTO {
 
-    @NotNull @Positive
+    @NotNull
+    @Positive
     private Integer prazoEmprestimoAluno;
 
-    @NotNull @Positive
+    @NotNull
+    @Positive
     private Integer prazoEmprestimoProfessor;
 
-    @NotNull @Positive
+    @NotNull
+    @Positive
     private Integer maxEmprestimosSimultaneos;
 
     @NotNull

@@ -4,13 +4,10 @@ import erp.academico.dto.auth.LoginRequestDTO;
 import erp.academico.dto.auth.LoginResponseDTO;
 import erp.academico.dto.auth.RefreshTokenRequestDTO;
 import erp.academico.dto.auth.RegisterRequestDTO;
-
 import erp.academico.exception.BusinessException;
 import erp.academico.exception.ResourceNotFoundException;
-
 import erp.academico.infra.security.TokenService;
 import erp.academico.infra.security.UsuarioDetails;
-
 import erp.academico.modules.usuario.dto.UsuarioRequestDTO;
 import erp.academico.modules.usuario.dto.UsuarioResponseDTO;
 import erp.academico.modules.usuario.model.Usuario;
@@ -18,6 +15,7 @@ import erp.academico.modules.usuario.repository.UsuarioRepository;
 import erp.academico.modules.usuario.service.UsuarioService;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

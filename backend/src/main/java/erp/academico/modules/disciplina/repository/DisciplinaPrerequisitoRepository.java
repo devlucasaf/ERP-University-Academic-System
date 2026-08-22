@@ -1,6 +1,7 @@
 package erp.academico.modules.disciplina.repository;
 
 import erp.academico.modules.disciplina.model.DisciplinaPrerequisito;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

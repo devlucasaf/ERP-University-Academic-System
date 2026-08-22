@@ -3,10 +3,13 @@ package erp.academico.modules.biblioteca.livro.rest;
 import erp.academico.modules.biblioteca.livro.dto.LivroRequestDTO;
 import erp.academico.modules.biblioteca.livro.dto.LivroResponseDTO;
 import erp.academico.modules.biblioteca.livro.service.LivroService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
@@ -27,19 +30,17 @@ public class LivroController {
 
     private final LivroService livroService;
 
-    // --- BUSCA AVANÇADA ---
+    // --- BUSCA LIVROS POR TÍTULO, AUTOR, CATEGORIA OU ISBN UTILIZANDO PAGINAÇÃO ---
     @GetMapping
     @Operation(summary = "Busca livros por título, autor, categoria ou ISBN")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Page<LivroResponseDTO>> buscar(
-            @RequestParam(required = false) String titulo,
-            @RequestParam(required = false) String autor,
-            @RequestParam(required = false) String categoria,
-            @RequestParam(required = false) String isbn,
-            Pageable pageable) {
+    public ResponseEntity<Page<LivroResponseDTO>> buscar(@RequestParam(required = false) String titulo,
+            @RequestParam(required = false) String autor, @RequestParam(required = false) String categoria,
+            @RequestParam(required = false) String isbn, Pageable pageable) {
         return ResponseEntity.ok(livroService.buscar(titulo, autor, categoria, isbn, pageable));
     }
 
+    // --- BUSCA UM LIVRO PELO SEU IDENTIFICADOR ---
     @GetMapping("/{id}")
     @Operation(summary = "Busca livro pelo ID")
     @PreAuthorize("isAuthenticated()")
@@ -47,19 +48,18 @@ public class LivroController {
         return ResponseEntity.ok(livroService.buscarPorId(id));
     }
 
-    // --- CRIA LIVRO COM UPLOAD DE CAPA ---
+    // --- CADASTRA UM NOVO LIVRO NO ACERVO COM O ENVIO OPCIONAL DE UMA CAPA ---
     @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     @Operation(summary = "Cadastra novo livro no acervo")
     @PreAuthorize("hasAnyRole('BIBLIOTECARIO','ADMIN')")
-    public ResponseEntity<LivroResponseDTO> criar(
-            @Valid @RequestPart("dados") LivroRequestDTO dto,
-            @RequestPart(value = "capa", required = false) MultipartFile capa,
-            UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<LivroResponseDTO> criar(@Valid @RequestPart("dados") LivroRequestDTO dto,
+            @RequestPart(value = "capa", required = false) MultipartFile capa, UriComponentsBuilder uriBuilder) {
         LivroResponseDTO criado = livroService.criar(dto, capa);
         URI uri = uriBuilder.path("/biblioteca/livros/{id}").buildAndExpand(criado.getId()).toUri();
         return ResponseEntity.created(uri).body(criado);
     }
 
+    // --- ATUALIZA OS DADOS E OPCIONALMENTE A CAPA DE UM LIVRO DO ACERVO ---
     @PutMapping(value = "/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     @Operation(summary = "Atualiza livro do acervo")
     @PreAuthorize("hasAnyRole('BIBLIOTECARIO','ADMIN')")
@@ -70,6 +70,7 @@ public class LivroController {
         return ResponseEntity.ok(livroService.atualizar(id, dto, capa));
     }
 
+    // --- REMOVE UM LIVRO DO ACERVO CASO ELE NÃO POSSUA EXEMPLARES CADASTRADOS ---
     @DeleteMapping("/{id}")
     @Operation(summary = "Remove livro do acervo (sem exemplares)")
     @PreAuthorize("hasAnyRole('BIBLIOTECARIO','ADMIN')")

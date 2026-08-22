@@ -9,10 +9,12 @@ import erp.academico.modules.aluno.model.StatusAluno;
 import erp.academico.modules.aluno.repository.AlunoRepository;
 import erp.academico.modules.usuario.dto.UsuarioRequestDTO;
 import erp.academico.modules.usuario.dto.UsuarioResponseDTO;
-import erp.academico.modules.usuario.model.RoleUsuario;
+import erp.academico.modules.usuario.model.TipoUsuario;
 import erp.academico.modules.usuario.model.Usuario;
 import erp.academico.modules.usuario.service.UsuarioService;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -66,7 +68,7 @@ public class AlunoService {
                 .telefone(dto.getTelefone())
                 .dataNascimento(dto.getDataNascimento())
                 .ativo(true)
-                .role(RoleUsuario.ALUNO)
+                .role(TipoUsuario.ALUNO)
                 .build());
 
         // --- MONTA E PERSISTE A ENTIDADE ALUNO ---
@@ -87,8 +89,8 @@ public class AlunoService {
     public AlunoResponseDTO atualizar(UUID id, AlunoRequestDTO dto) {
         Aluno aluno = buscarEntidade(id);
 
-        // --- SE A MATRÍCULA MUDOU, GARANTE QUE A NOVA NÃO COLIDA COM OUTRO ALUNO ---
-        if (!aluno.getMatriculaRA().equalsIgnoreCase(dto.getMatriculaRA()) && alunoRepository.existsByMatriculaRA(dto.getMatriculaRA())) {
+        if (!aluno.getMatriculaRA().equalsIgnoreCase(dto.getMatriculaRA()) &&
+                alunoRepository.existsByMatriculaRA(dto.getMatriculaRA())) {
             throw new BusinessException("Já existe um aluno com a matrícula: " + dto.getMatriculaRA());
         }
 

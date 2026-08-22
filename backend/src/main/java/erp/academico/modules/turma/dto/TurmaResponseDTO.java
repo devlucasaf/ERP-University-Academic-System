@@ -1,6 +1,7 @@
 package erp.academico.modules.turma.dto;
 
 import erp.academico.modules.turma.model.Turno;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

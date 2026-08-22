@@ -1,14 +1,16 @@
 package erp.academico.modules.turma.model;
 
-// --- IMPORTS ---
 import erp.academico.modules.disciplina.model.Disciplina;
 import erp.academico.modules.professor.model.Professor;
+
 import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;

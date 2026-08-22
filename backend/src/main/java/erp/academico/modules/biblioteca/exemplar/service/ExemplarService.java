@@ -26,23 +26,26 @@ public class ExemplarService {
     private final ExemplarRepository exemplarRepository;
     private final LivroService livroService;
 
+    // --- LISTA OS EXEMPLARES DE UM LIVRO UTILIZANDO PAGINAÇÃO ---
     @Transactional(readOnly = true)
     public Page<ExemplarResponseDTO> listarPorLivro(UUID livroId, Pageable pageable) {
         return exemplarRepository.findByLivroId(livroId, pageable).map(this::toResponse);
     }
 
+    // --- BUSCA UM EXEMPLAR PELO SEU IDENTIFICADOR ---
     @Transactional(readOnly = true)
     public ExemplarResponseDTO buscarPorId(UUID id) {
         return toResponse(buscarEntidade(id));
     }
 
+    // --- BUSCA UM EXEMPLAR PELO SEU CÓDIGO DE BARRAS ---
     @Transactional(readOnly = true)
     public ExemplarResponseDTO buscarPorCodigoBarras(String codigo) {
         return toResponse(exemplarRepository.findByCodigoBarras(codigo)
                 .orElseThrow(() -> new ResourceNotFoundException("Exemplar", codigo)));
     }
 
-    // --- CRIA UM NOVO EXEMPLAR ---
+    // --- CRIA UM NOVO EXEMPLAR E GERA UM CÓDIGO DE BARRAS QUANDO ELE NÃO É INFORMADO ---
     @Transactional
     public ExemplarResponseDTO criar(ExemplarRequestDTO dto) {
         Livro livro = livroService.buscarEntidade(dto.getLivroId());
@@ -65,7 +68,7 @@ public class ExemplarService {
         return toResponse(exemplarRepository.save(exemplar));
     }
 
-    // --- ATUALIZA LOCALIZAÇÃO E STATUS ADMINISTRATIVO ---
+    // --- ATUALIZA A LOCALIZAÇÃO E O STATUS ADMINISTRATIVO DE UM EXEMPLAR ---
     @Transactional
     public ExemplarResponseDTO atualizar(UUID id, ExemplarRequestDTO dto, StatusExemplar status) {
         Exemplar ex = buscarEntidade(id);
@@ -79,6 +82,7 @@ public class ExemplarService {
         return toResponse(exemplarRepository.save(ex));
     }
 
+    // --- REMOVE UM EXEMPLAR CASO ELE NÃO ESTEJA EMPRESTADO OU RESERVADO ---
     @Transactional
     public void deletar(UUID id) {
         Exemplar ex = buscarEntidade(id);
@@ -88,21 +92,22 @@ public class ExemplarService {
         exemplarRepository.delete(ex);
     }
 
-    // --- ENDPOINT PARA GERAR CÓDIGO DE BARRAS SUGERIDO ---
+    // --- GERA UM CÓDIGO DE BARRAS ÚNICO PARA UM EXEMPLAR ---
     public String gerarCodigoBarras() {
         String codigo;
         do {
-            codigo = "EX" + System.currentTimeMillis()
-                    + String.format("%04d", (int) (Math.random() * 10000));
+            codigo = "EX" + System.currentTimeMillis() + String.format("%04d", (int) (Math.random() * 10000));
         } while (exemplarRepository.existsByCodigoBarras(codigo));
         return codigo;
     }
 
+    // --- BUSCA UM EXEMPLAR PELO IDENTIFICADOR OU LANÇA UMA EXCEÇÃO CASO ELE NÃO SEJA ENCONTRADO ---
     public Exemplar buscarEntidade(UUID id) {
         return exemplarRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Exemplar", id));
     }
 
+    // --- CONVERTE A ENTIDADE EXEMPLAR EM UM DTO DE RESPOSTA ---
     public ExemplarResponseDTO toResponse(Exemplar e) {
         return ExemplarResponseDTO.builder()
                 .id(e.getId())

@@ -1,6 +1,7 @@
 package erp.academico.modules.curso.dto;
 
 import erp.academico.modules.curso.model.NivelCurso;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

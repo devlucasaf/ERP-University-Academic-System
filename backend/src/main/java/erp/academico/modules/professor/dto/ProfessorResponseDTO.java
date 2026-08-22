@@ -1,6 +1,7 @@
 package erp.academico.modules.professor.dto;
 
 import erp.academico.modules.usuario.dto.UsuarioResponseDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

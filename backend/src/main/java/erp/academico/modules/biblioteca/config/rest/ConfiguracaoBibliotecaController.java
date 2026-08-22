@@ -1,11 +1,13 @@
-package erp.academico.modules.biblioteca.configuracao.rest;
+package erp.academico.modules.biblioteca.config.rest;
 
-import erp.academico.modules.biblioteca.configuracao.dto.ConfiguracaoBibliotecaDTO;
-import erp.academico.modules.biblioteca.configuracao.model.ConfiguracaoBiblioteca;
-import erp.academico.modules.biblioteca.configuracao.service.ConfiguracaoBibliotecaService;
+import erp.academico.modules.biblioteca.config.dto.ConfiguracaoBibliotecaDTO;
+import erp.academico.modules.biblioteca.config.model.ConfiguracaoBiblioteca;
+import erp.academico.modules.biblioteca.config.service.ConfiguracaoBibliotecaService;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +20,14 @@ public class ConfiguracaoBibliotecaController {
 
     private final ConfiguracaoBibliotecaService service;
 
+    // --- OBTÉM AS CONFIGURAÇÕES ATUAIS DA BIBLIOTECA ---
     @GetMapping
     @PreAuthorize("hasAnyRole('BIBLIOTECARIO','ADMIN')")
     public ResponseEntity<ConfiguracaoBiblioteca> obter() {
         return ResponseEntity.ok(service.obter());
     }
 
+    // --- ATUALIZA OS PRAZOS, LIMITES E O VALOR DA MULTA DA BIBLIOTECA ---
     @PutMapping
     @PreAuthorize("hasAnyRole('ADMIN','BIBLIOTECARIO')")
     public ResponseEntity<ConfiguracaoBiblioteca> atualizar(@Valid @RequestBody ConfiguracaoBibliotecaDTO dto) {

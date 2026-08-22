@@ -20,7 +20,7 @@ import erp.academico.modules.matricula.repository.MatriculaRepository;
 import erp.academico.modules.professor.model.Professor;
 import erp.academico.modules.turma.model.TurmaDisciplina;
 import erp.academico.modules.turma.repository.TurmaDisciplinaRepository;
-import erp.academico.modules.usuario.model.RoleUsuario;
+import erp.academico.modules.usuario.model.TipoUsuario;
 import erp.academico.modules.usuario.model.Usuario;
 
 import lombok.RequiredArgsConstructor;
@@ -123,8 +123,7 @@ public class AtividadeService {
         Usuario autenticado = usuarioAutenticadoOuFalha();
         validarPodeEditarAtividade(atividade, autenticado);
 
-        entregaRepository.findByAtividadeId(id)
-                .forEach(e -> storageService.delete(e.getArquivoUrl()));
+        entregaRepository.findByAtividadeId(id).forEach(e -> storageService.delete(e.getArquivoUrl()));
         atividadeRepository.delete(atividade);
     }
 
@@ -239,10 +238,10 @@ public class AtividadeService {
             throw new BusinessException("Vínculo turma/disciplina não possui professor responsável.");
         }
 
-        if (autenticado.getRole() == RoleUsuario.ADMIN
-                || autenticado.getRole() == RoleUsuario.COORDENADOR) {
+        if (autenticado.getRole() == TipoUsuario.ADMIN || autenticado.getRole() == TipoUsuario.COORDENADOR) {
             return professor;
         }
+
         if (!professor.getUsuario().getId().equals(autenticado.getId())) {
             throw new BusinessException("Apenas o professor responsável pela disciplina pode realizar esta operação.");
         }
@@ -251,8 +250,8 @@ public class AtividadeService {
 
     // --- VERIFICA SE O USUÁRIO LOGADO PODE EDITAR/AVALIAR A ATIVIDADE ---
     private void validarPodeEditarAtividade(Atividade atividade, Usuario autenticado) {
-        if (autenticado.getRole() == RoleUsuario.ADMIN
-                || autenticado.getRole() == RoleUsuario.COORDENADOR) {
+        if (autenticado.getRole() == TipoUsuario.ADMIN
+                || autenticado.getRole() == TipoUsuario.COORDENADOR) {
             return;
         }
 

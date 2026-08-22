@@ -22,7 +22,9 @@ import erp.academico.modules.turma.repository.TurmaDisciplinaRepository;
 import erp.academico.modules.turma.repository.TurmaRepository;
 import erp.academico.modules.usuario.dto.UsuarioResponseDTO;
 import erp.academico.modules.usuario.model.Usuario;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,7 @@ public class TurmaService {
     private final ProfessorDisciplinaRepository professorDisciplinaRepository;
     private final AlunoRepository alunoRepository;
 
+    // --- LISTA AS TURMAS UTILIZANDO PAGINAÇÃO E PERMITE A FILTRAGEM POR CURSO OU PERÍODO LETIVO ---
     @Transactional(readOnly = true)
     public Page<TurmaResponseDTO> listar(UUID cursoId, String periodoLetivo, Pageable pageable) {
         Page<Turma> page;
@@ -77,10 +80,8 @@ public class TurmaService {
             throw new BusinessException("Já existe uma turma com o código: " + dto.getCodigo());
         }
 
-        // --- BUSCA CURSO ---
         Curso curso = cursoService.buscarEntidade(dto.getCursoId());
 
-        // --- BUSCA PROFESSOR REGENTE SE INFORMADO ---
         Professor regente = null;
         if (dto.getProfessorRegenteId() != null) {
             regente = buscarProfessor(dto.getProfessorRegenteId());
@@ -164,12 +165,10 @@ public class TurmaService {
     public TurmaDisciplinaResponseDTO vincularDisciplina(UUID turmaId, VincularDisciplinaTurmaRequestDTO dto) {
         Turma turma = buscarEntidade(turmaId);
 
-        // --- VALIDA HORÁRIO ---
         if (!dto.getHorarioFim().isAfter(dto.getHorarioInicio())) {
             throw new BusinessException("O horário de término deve ser maior que o horário de início.");
         }
 
-        // --- NÃO PERMITE VINCULAR A MESMA DISCIPLINA DUAS VEZES NA MESMA TURMA ---
         if (turmaDisciplinaRepository.existsByTurmaIdAndDisciplinaId(turmaId, dto.getDisciplinaId())) {
             throw new BusinessException("Esta disciplina já está vinculada à turma.");
         }
@@ -179,10 +178,8 @@ public class TurmaService {
 
         Professor professor = buscarProfessor(dto.getProfessorId());
 
-        // --- O PROFESSOR PRECISA LECIONAR ESSA DISCIPLINA ---
         if (!professorDisciplinaRepository.existsByProfessorIdAndDisciplinaId(professor.getId(), disciplina.getId())) {
-            throw new BusinessException(
-                    "O professor selecionado não está habilitado a lecionar a disciplina informada.");
+            throw new BusinessException("O professor selecionado não está habilitado a lecionar a disciplina informada.");
         }
 
         TurmaDisciplina vinculo = TurmaDisciplina.builder()
@@ -207,20 +204,19 @@ public class TurmaService {
         turmaDisciplinaRepository.delete(vinculo);
     }
 
-    // --- HELPERS ---
-
+    // --- BUSCA UMA TURMA PELO IDENTIFICADOR OU LANÇA UMA EXCEÇÃO CASO ELA NÃO SEJA ENCONTRADA ---
     private Turma buscarEntidade(UUID id) {
         return turmaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Turma", id));
     }
 
+    // --- BUSCA UM PROFESSOR PELO IDENTIFICADOR OU LANÇA UMA EXCEÇÃO CASO ELE NÃO SEJA ENCONTRADO ---
     private Professor buscarProfessor(UUID id) {
         return professorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Professor", id));
     }
 
-    // --- CONVERSÕES PARA DTO ---
-
+    // --- CONVERTE A ENTIDADE TURMA EM UM DTO DE RESPOSTA ---
     private TurmaResponseDTO toResponse(Turma t) {
         Professor regente = t.getProfessorRegente();
         return TurmaResponseDTO.builder()
@@ -241,6 +237,7 @@ public class TurmaService {
                 .build();
     }
 
+    // --- CONVERTE O VÍNCULO ENTRE TURMA E DISCIPLINA EM UM DTO DE RESPOSTA ---
     private TurmaDisciplinaResponseDTO toVinculoResponse(TurmaDisciplina v) {
         return TurmaDisciplinaResponseDTO.builder()
                 .id(v.getId())
@@ -257,6 +254,7 @@ public class TurmaService {
                 .build();
     }
 
+    // --- CONVERTE A ENTIDADE ALUNO EM UM DTO DE RESPOSTA ---
     private AlunoResponseDTO toAlunoResponse(Aluno a) {
         Usuario u = a.getUsuario();
         UsuarioResponseDTO usuarioDto = UsuarioResponseDTO.builder()

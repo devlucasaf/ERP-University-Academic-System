@@ -21,7 +21,7 @@ public class OpenApiConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("ERP Academic School System API")
-                        .description("API REST do ERP Acadêmico Escolar — gestão de alunos, "
+                        .description("API REST do ERP Acadêmico Universitário — gestão de alunos, "
                                 + "professores, turmas, disciplinas, notas, frequência e financeiro.")
                         .version("v0.0.1")
                         .contact(new Contact()

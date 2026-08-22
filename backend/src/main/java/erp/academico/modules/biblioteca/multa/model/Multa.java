@@ -1,12 +1,15 @@
 package erp.academico.modules.biblioteca.multa.model;
 
 import erp.academico.modules.biblioteca.emprestimo.model.Emprestimo;
+
 import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;

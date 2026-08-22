@@ -16,20 +16,20 @@ import java.util.UUID;
 @Builder
 public class LivroResponseDTO {
 
-    private UUID          id;
-    private String        isbn;
-    private String        titulo;
-    private String        autor;
-    private String        editora;
-    private Integer       anoPublicacao;
-    private String        edicao;
-    private Integer       paginas;
-    private String        categoria;
-    private String        sinopse;
-    private String        capaUrl;
-    private long          totalExemplares;
-    private long          exemplaresDisponiveis;
-    private LocalDateTime criadoEm;
-    private LocalDateTime atualizadoEm;
+    private UUID            id;
+    private String          isbn;
+    private String          titulo;
+    private String          autor;
+    private String          editora;
+    private Integer         anoPublicacao;
+    private String          edicao;
+    private Integer         paginas;
+    private String          categoria;
+    private String          sinopse;
+    private String          capaUrl;
+    private long            totalExemplares;
+    private long            exemplaresDisponiveis;
+    private LocalDateTime   criadoEm;
+    private LocalDateTime   atualizadoEm;
 }
 

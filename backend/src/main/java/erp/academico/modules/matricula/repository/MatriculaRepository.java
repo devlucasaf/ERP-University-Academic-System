@@ -20,9 +20,9 @@ public interface MatriculaRepository extends JpaRepository<Matricula, UUID> {
 
     long countByTurmaIdAndStatus(UUID turmaId, StatusMatricula status);
 
-    // --- MATRÍCULAS DE UMA TURMA EM UM STATUS (USADO PARA GERAR FREQUÊNCIAS AO CRIAR AULA) ---
+    // --- MATRÍCULAS DE UMA TURMA EM UM STATUS ---
     List<Matricula> findByTurmaIdAndStatus(UUID turmaId, StatusMatricula status);
 
-    // --- VERIFICA SE O ALUNO ESTÁ COM UMA MATRÍCULA NO STATUS INFORMADO NA TURMA (USADO P/ ENTREGA DE ATIVIDADE) ---
+    // --- VERIFICA SE O ALUNO ESTÁ COM UMA MATRÍCULA NO STATUS INFORMADO NA TURMA ---
     boolean existsByAlunoIdAndTurmaIdAndStatus(UUID alunoId, UUID turmaId, StatusMatricula status);
 }

@@ -7,11 +7,14 @@ import erp.academico.dto.auth.RegisterRequestDTO;
 import erp.academico.infra.security.UsuarioDetails;
 import erp.academico.modules.autenticacao.service.AutenticacaoService;
 import erp.academico.modules.usuario.dto.UsuarioResponseDTO;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

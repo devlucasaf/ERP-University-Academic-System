@@ -28,6 +28,7 @@ public class ExemplarController {
 
     private final ExemplarService exemplarService;
 
+    // --- LISTA OS EXEMPLARES DE UM LIVRO UTILIZANDO PAGINAÇÃO ---
     @GetMapping("/livro/{livroId}")
     @Operation(summary = "Lista exemplares de um livro")
     @PreAuthorize("isAuthenticated()")
@@ -35,12 +36,14 @@ public class ExemplarController {
         return ResponseEntity.ok(exemplarService.listarPorLivro(livroId, pageable));
     }
 
+    // --- BUSCA UM EXEMPLAR PELO SEU IDENTIFICADOR ---
     @GetMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ExemplarResponseDTO> buscarPorId(@PathVariable UUID id) {
         return ResponseEntity.ok(exemplarService.buscarPorId(id));
     }
 
+    // --- BUSCA UM EXEMPLAR PELO SEU CÓDIGO DE BARRAS ---
     @GetMapping("/codigo/{codigoBarras}")
     @Operation(summary = "Busca exemplar pelo código de barras")
     @PreAuthorize("hasAnyRole('BIBLIOTECARIO','ADMIN')")
@@ -48,7 +51,7 @@ public class ExemplarController {
         return ResponseEntity.ok(exemplarService.buscarPorCodigoBarras(codigoBarras));
     }
 
-    // --- ENDPOINT AUXILIAR PARA GERAR CÓDIGO DE BARRAS AUTOMATICAMENTE ---
+    // --- GERA AUTOMATICAMENTE UMA SUGESTÃO DE CÓDIGO DE BARRAS ÚNICO ---
     @GetMapping("/gerar-codigo-barras")
     @Operation(summary = "Gera um código de barras único sugerido")
     @PreAuthorize("hasAnyRole('BIBLIOTECARIO','ADMIN')")
@@ -56,12 +59,14 @@ public class ExemplarController {
         return ResponseEntity.ok(Map.of("codigoBarras", exemplarService.gerarCodigoBarras()));
     }
 
+    // --- CRIA UM NOVO EXEMPLAR FÍSICO DE UM LIVRO ---
     @PostMapping
     @PreAuthorize("hasAnyRole('BIBLIOTECARIO','ADMIN')")
     public ResponseEntity<ExemplarResponseDTO> criar(@Valid @RequestBody ExemplarRequestDTO dto) {
         return ResponseEntity.ok(exemplarService.criar(dto));
     }
 
+    // --- ATUALIZA OS DADOS E OPCIONALMENTE O STATUS DE UM EXEMPLAR ---
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('BIBLIOTECARIO','ADMIN')")
     public ResponseEntity<ExemplarResponseDTO> atualizar(
@@ -71,6 +76,7 @@ public class ExemplarController {
         return ResponseEntity.ok(exemplarService.atualizar(id, dto, status));
     }
 
+    // --- REMOVE UM EXEMPLAR PELO SEU IDENTIFICADOR ---
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('BIBLIOTECARIO','ADMIN')")
     public ResponseEntity<Void> deletar(@PathVariable UUID id) {

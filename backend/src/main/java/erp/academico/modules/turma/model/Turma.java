@@ -1,14 +1,16 @@
 package erp.academico.modules.turma.model;
 
-// --- IMPORTS ---
 import erp.academico.modules.curso.model.Curso;
 import erp.academico.modules.professor.model.Professor;
+
 import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -69,3 +71,4 @@ public class Turma {
     @Column(name = "atualizadoEm", nullable = false)
     private LocalDateTime atualizadoEm;
 }
+

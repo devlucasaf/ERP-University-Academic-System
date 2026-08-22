@@ -1,6 +1,6 @@
 package erp.academico.modules.usuario.model;
 
-public enum RoleUsuario {
+public enum TipoUsuario {
     ALUNO,
     PROFESSOR,
     COORDENADOR,

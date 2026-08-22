@@ -2,6 +2,7 @@ package erp.academico.modules.biblioteca.exemplar.repository;
 
 import erp.academico.modules.biblioteca.exemplar.model.Exemplar;
 import erp.academico.modules.biblioteca.exemplar.model.StatusExemplar;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

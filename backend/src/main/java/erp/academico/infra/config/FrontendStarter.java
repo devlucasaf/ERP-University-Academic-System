@@ -29,9 +29,9 @@ public class FrontendStarter {
     @EventListener(ApplicationReadyEvent.class)
     public void onApplicationReady() {
         System.out.println();
-        System.out.println("=================================================================");
-        System.out.println("  ERP Sistema Acadêmico - Iniciando ambiente de desenvolvimento...");
-        System.out.println("=================================================================");
+        System.out.println("------------------------------------------------------------------------------------");
+        System.out.println("  ERP Sistema Acadêmico Universitário - Iniciando ambiente de desenvolvimento  ");
+        System.out.println("------------------------------------------------------------------------------------");
 
         // --- INICIA O FRONTEND EM UMA THREAD SEPARADA PARA NAO BLOQUEAR O SPRING ---
         new Thread(() -> {
@@ -63,7 +63,6 @@ public class FrontendStarter {
 
                 // --- ABRE O FRONTEND NO NAVEGADOR ---
                 abrirNoNavegador(FRONTEND_URL);
-
             } catch (Exception e) {
                 System.out.println(" Nao foi possivel iniciar o frontend automaticamente.");
                 System.out.println(" Inicie manualmente: cd frontend && npm run dev");

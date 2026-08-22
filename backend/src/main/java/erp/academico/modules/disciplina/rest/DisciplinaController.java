@@ -5,10 +5,13 @@ import erp.academico.modules.disciplina.dto.DisciplinaRequestDTO;
 import erp.academico.modules.disciplina.dto.DisciplinaResponseDTO;
 import erp.academico.modules.disciplina.dto.VincularPrerequisitoRequestDTO;
 import erp.academico.modules.disciplina.service.DisciplinaService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -74,8 +77,7 @@ public class DisciplinaController {
     @PutMapping("/{id}")
     @Operation(summary = "Atualiza uma disciplina existente")
     @PreAuthorize("hasAnyRole('ADMIN','COORDENADOR')")
-    public ResponseEntity<DisciplinaResponseDTO> atualizar(@PathVariable UUID id,
-                                                           @Valid @RequestBody DisciplinaRequestDTO dto) {
+    public ResponseEntity<DisciplinaResponseDTO> atualizar(@PathVariable UUID id, @Valid @RequestBody DisciplinaRequestDTO dto) {
         return ResponseEntity.ok(disciplinaService.atualizar(id, dto));
     }
 

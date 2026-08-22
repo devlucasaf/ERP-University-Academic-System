@@ -1,6 +1,7 @@
 package erp.academico.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -44,13 +45,8 @@ public class GlobalExceptionHandler {
                 .toList();
 
         // --- MONTA O CORPO DA RESPOSTA INCLUINDO A LISTA DE ERROS POR CAMPO ---
-        ErrorResponse body = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                "Erro de validação nos campos enviados.",
-                request.getRequestURI(),
-                fieldErrors
-        );
+        ErrorResponse body = new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+                "Erro de validação nos campos enviados.", request.getRequestURI(), fieldErrors);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 
@@ -75,26 +71,17 @@ public class GlobalExceptionHandler {
     // --- FALLBACK PARA QUALQUER EXCEÇÃO NÃO TRATADA ACIMA ---
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneric(Exception ex, HttpServletRequest request) {
-        return build(HttpStatus.INTERNAL_SERVER_ERROR,
-                "Erro interno do servidor: " + ex.getMessage(), request);
+        return build(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno do servidor: " + ex.getMessage(), request);
     }
 
     // --- MONTA A RESPOSTA PADRÃO SEM LISTA DE ERROS POR CAMPO ---
     private ResponseEntity<ErrorResponse> build(HttpStatus status, String message, HttpServletRequest request) {
-        ErrorResponse body = new ErrorResponse(
-                LocalDateTime.now(),
-                status.value(),
-                message,
-                request.getRequestURI()
-        );
+        ErrorResponse body = new ErrorResponse(LocalDateTime.now(), status.value(), message, request.getRequestURI());
         return ResponseEntity.status(status).body(body);
     }
 
     // --- MÉTODO AUXILIAR ---
     private FieldErrorItem toFieldErrorItem(FieldError fieldError) {
-        return new FieldErrorItem(
-                fieldError.getField(),
-                fieldError.getDefaultMessage()
-        );
+        return new FieldErrorItem(fieldError.getField(), fieldError.getDefaultMessage());
     }
 }

@@ -2,6 +2,7 @@ package erp.academico.modules.biblioteca.multa.repository;
 
 import erp.academico.modules.biblioteca.multa.model.Multa;
 import erp.academico.modules.biblioteca.multa.model.StatusMulta;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

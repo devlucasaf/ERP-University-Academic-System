@@ -13,7 +13,7 @@ import erp.academico.modules.nota.model.Nota;
 import erp.academico.modules.nota.repository.NotaRepository;
 import erp.academico.modules.turma.model.TurmaDisciplina;
 import erp.academico.modules.turma.repository.TurmaDisciplinaRepository;
-import erp.academico.modules.usuario.model.RoleUsuario;
+import erp.academico.modules.usuario.model.TipoUsuario;
 import erp.academico.modules.usuario.model.Usuario;
 
 import lombok.RequiredArgsConstructor;
@@ -176,13 +176,13 @@ public class NotaService {
 
     // --- VALIDA QUE O USUÁRIO AUTENTICADO PODE LANÇAR/EDITAR NOTAS PARA AQUELA TURMA/DISCIPLINA ---
     private void validarPermissaoLancamento(Usuario autenticado, TurmaDisciplina td) {
-        RoleUsuario role = autenticado.getRole();
+        TipoUsuario role = autenticado.getRole();
 
-        if (role == RoleUsuario.ADMIN || role == RoleUsuario.COORDENADOR) {
+        if (role == TipoUsuario.ADMIN || role == TipoUsuario.COORDENADOR) {
             return;
         }
 
-        if (role == RoleUsuario.PROFESSOR) {
+        if (role == TipoUsuario.PROFESSOR) {
             UUID profUsuarioId = td.getProfessor().getUsuario().getId();
             if (profUsuarioId.equals(autenticado.getId())) {
                 return;

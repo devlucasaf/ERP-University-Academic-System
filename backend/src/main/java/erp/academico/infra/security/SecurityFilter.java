@@ -40,9 +40,7 @@ public class SecurityFilter extends OncePerRequestFilter {
                     UserDetails userDetails = usuarioDetailsService.loadUserByUsername(email);
 
                     UsernamePasswordAuthenticationToken authentication =
-                            new UsernamePasswordAuthenticationToken(
-                                    userDetails, null, userDetails.getAuthorities());
-
+                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             } catch (Exception ignored) {

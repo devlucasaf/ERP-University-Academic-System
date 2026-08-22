@@ -37,6 +37,7 @@ public class AlunoController {
 
     private final AlunoService alunoService;
 
+    // --- LISTA OS ALUNOS DE FORMA PAGINADA, PERMITINDO A FILTRAGEM OPCIONAL POR STATUS ---
     @GetMapping
     @Operation(summary = "Lista alunos paginados (opcionalmente filtrando por status)")
     @PreAuthorize("hasAnyRole('ADMIN','COORDENADOR','SECRETARIA','PROFESSOR')")
@@ -44,6 +45,7 @@ public class AlunoController {
         return ResponseEntity.ok(alunoService.listar(status, pageable));
     }
 
+    // --- BUSCA UM ALUNO PELO SEU IDENTIFICADOR ---
     @GetMapping("/{id}")
     @Operation(summary = "Busca aluno pelo ID")
     @PreAuthorize("hasAnyRole('ADMIN','COORDENADOR','SECRETARIA','PROFESSOR')")
@@ -51,6 +53,7 @@ public class AlunoController {
         return ResponseEntity.ok(alunoService.buscarPorId(id));
     }
 
+    // --- BUSCA UM ALUNO PELO SEU REGISTRO ACADÊMICO ---
     @GetMapping("/matricula/{matriculaRA}")
     @Operation(summary = "Busca aluno pela matrícula (RA)")
     @PreAuthorize("hasAnyRole('ADMIN','COORDENADOR','SECRETARIA','PROFESSOR')")
@@ -58,6 +61,7 @@ public class AlunoController {
         return ResponseEntity.ok(alunoService.buscarPorMatricula(matriculaRA));
     }
 
+    // --- CRIA UM NOVO ALUNO E RETORNA A LOCALIZAÇÃO DO RECURSO CRIADO ---
     @PostMapping
     @Operation(summary = "Cria um aluno (cria também o usuário associado com role ALUNO)")
     @PreAuthorize("hasAnyRole('ADMIN','COORDENADOR','SECRETARIA')")
@@ -67,6 +71,7 @@ public class AlunoController {
         return ResponseEntity.created(uri).body(criado);
     }
 
+    // --- ATUALIZA OS DADOS DE UM ALUNO EXISTENTE ---
     @PutMapping("/{id}")
     @Operation(summary = "Atualiza um aluno existente")
     @PreAuthorize("hasAnyRole('ADMIN','COORDENADOR','SECRETARIA')")
@@ -74,6 +79,7 @@ public class AlunoController {
         return ResponseEntity.ok(alunoService.atualizar(id, dto));
     }
 
+    // --- REMOVE UM ALUNO PELO SEU IDENTIFICADOR ---
     @DeleteMapping("/{id}")
     @Operation(summary = "Remove um aluno")
     @PreAuthorize("hasAnyRole('ADMIN','COORDENADOR','SECRETARIA')")

@@ -105,11 +105,8 @@ public class MatriculaService {
         return alterarStatus(id, StatusMatricula.CANCELADA, dto, true);
     }
 
-    // --- HELPERS ---
-    private MatriculaResponseDTO alterarStatus(UUID id,
-                                               StatusMatricula novoStatus,
-                                               AlterarStatusMatriculaRequestDTO dto,
-                                               boolean liberarTurmaAtualDoAluno) {
+    // --- ALTERA O STATUS DE UMA MATRÍCULA ATIVA E LIBERA A TURMA ATUAL DO ALUNO QUANDO NECESSÁRIO ---
+    private MatriculaResponseDTO alterarStatus(UUID id, StatusMatricula novoStatus, AlterarStatusMatriculaRequestDTO dto, boolean liberarTurmaAtualDoAluno) {
         Matricula matricula = buscarEntidade(id);
 
         if (matricula.getStatus() != StatusMatricula.ATIVA) {
@@ -133,6 +130,7 @@ public class MatriculaService {
         return toResponse(matriculaRepository.save(matricula));
     }
 
+    // --- BUSCA UMA MATRÍCULA PELO IDENTIFICADOR OU LANÇA UMA EXCEÇÃO CASO ELA NÃO SEJA ENCONTRADA ---
     private Matricula buscarEntidade(UUID id) {
         return matriculaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Matrícula", id));
@@ -152,6 +150,7 @@ public class MatriculaService {
         return null;
     }
 
+    // --- CONVERTE A ENTIDADE MATRÍCULA EM UM DTO DE RESPOSTA ---
     private MatriculaResponseDTO toResponse(Matricula m) {
         Usuario criador = m.getCriadaPor();
         return MatriculaResponseDTO.builder()

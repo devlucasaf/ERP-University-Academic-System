@@ -1,6 +1,5 @@
 package erp.academico.modules.usuario.service;
 
-// --- IMPORTS ---
 import erp.academico.exception.BusinessException;
 import erp.academico.exception.ResourceNotFoundException;
 import erp.academico.infra.email.EmailService;
@@ -9,7 +8,9 @@ import erp.academico.modules.usuario.dto.UsuarioRequestDTO;
 import erp.academico.modules.usuario.dto.UsuarioResponseDTO;
 import erp.academico.modules.usuario.model.Usuario;
 import erp.academico.modules.usuario.repository.UsuarioRepository;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -70,7 +71,6 @@ public class UsuarioService {
 
         Usuario salvo = usuarioRepository.save(usuario);
 
-        // --- "ENVIA" A SENHA TEMPORÁRIA POR E-MAIL (APENAS LOG POR ENQUANTO) ---
         if (senhaGerada) {
             emailService.enviarSenhaTemporaria(salvo.getEmail(), salvo.getNome(), senhaFinal);
         }

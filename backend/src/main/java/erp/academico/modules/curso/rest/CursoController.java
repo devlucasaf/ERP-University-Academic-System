@@ -6,10 +6,13 @@ import erp.academico.modules.curso.model.NivelCurso;
 import erp.academico.modules.curso.service.CursoService;
 import erp.academico.modules.disciplina.dto.DisciplinaResponseDTO;
 import erp.academico.modules.disciplina.service.DisciplinaService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -89,8 +92,7 @@ public class CursoController {
     @GetMapping("/{id}/disciplinas")
     @Operation(summary = "Lista as disciplinas do curso")
     @PreAuthorize("hasAnyRole('ADMIN','COORDENADOR','SECRETARIA','PROFESSOR')")
-    public ResponseEntity<Page<DisciplinaResponseDTO>> listarDisciplinas(@PathVariable UUID id,
-                                                                         Pageable pageable) {
+    public ResponseEntity<Page<DisciplinaResponseDTO>> listarDisciplinas(@PathVariable UUID id, Pageable pageable) {
         return ResponseEntity.ok(disciplinaService.listarPorCurso(id, pageable));
     }
 }
