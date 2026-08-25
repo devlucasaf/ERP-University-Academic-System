@@ -1,6 +1,7 @@
 package erp.academico.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,13 +21,14 @@ public class ErrorResponse {
     private int                     status;
     private String                  message;
     private String                  path;
-    private List<FieldErrorItem>    errors;
+    private List<FieldErrorItem>    fieldErrors;
 
+    // --- CRIA UMA RESPOSTA DE ERRO SEM A LISTA DE ERROS DE VALIDAÇÃO POR CAMPO ---
     public ErrorResponse(LocalDateTime timestamp, int status, String message, String path) {
         this.timestamp = timestamp;
         this.status = status;
         this.message = message;
         this.path = path;
-        this.errors = null;
+        this.fieldErrors = null;
     }
 }
