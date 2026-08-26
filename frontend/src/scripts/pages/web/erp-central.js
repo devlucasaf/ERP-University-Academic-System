@@ -1,11 +1,14 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const raiz              = document.documentElement;
-    const botaoTema         = document.getElementById("botaoTema");
-    const pesquisaModulo    = document.getElementById("pesquisaModulo");
-    const cartoes           = Array.from(document.querySelectorAll(".cartao-modulo"));
-    const botoesAcesso      = document.querySelectorAll(".botao-acesso");
-    const contadorModulos   = document.getElementById("contadorModulos");
-    const mensagemVazia     = document.getElementById("mensagemVazia");
+import { navegarPara } from "../../navegacao.js";
+
+// --- MONTA A CENTRAL DE ACESSO AOS MÓDULOS DO ERP ---
+export function montar(raiz) {
+    const raizHtml           = document.documentElement;
+    const botaoTema          = raiz.querySelector("#botaoTema");
+    const pesquisaModulo     = raiz.querySelector("#pesquisaModulo");
+    const cartoes            = Array.from(raiz.querySelectorAll(".cartao-modulo"));
+    const botoesAcesso       = raiz.querySelectorAll(".botao-acesso");
+    const contadorModulos    = raiz.querySelector("#contadorModulos");
+    const mensagemVazia      = raiz.querySelector("#mensagemVazia");
 
     // --- NORMALIZA O TEXTO PARA PERMITIR PESQUISAS SEM DIFERENÇA ENTRE ACENTOS E LETRAS MAIÚSCULAS ---
     function normalizarTexto(texto) {
@@ -48,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- APLICA O TEMA ESCOLHIDO E ATUALIZA AS INFORMAÇÕES DE ACESSIBILIDADE DO BOTÃO ---
     function aplicarTema(tema) {
-        raiz.dataset.tema = tema;
+        raizHtml.dataset.tema = tema;
         localStorage.setItem("tema-central-erp", tema);
 
         const temaEscuroAtivo = tema === "escuro";
@@ -58,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- ALTERNA ENTRE OS TEMAS CLARO E ESCURO ---
     function alternarTema() {
-        const temaAtual = raiz.dataset.tema === "escuro" ? "escuro" : "claro";
+        const temaAtual = raizHtml.dataset.tema === "escuro" ? "escuro" : "claro";
         aplicarTema(temaAtual === "escuro" ? "claro" : "escuro");
     }
 
@@ -67,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const rota = evento.currentTarget.dataset.rota;
 
         if (rota) {
-            window.location.href = rota;
+            navegarPara(rota);
         }
     }
 
@@ -79,4 +82,5 @@ document.addEventListener("DOMContentLoaded", () => {
     const prefereEscuro = window.matchMedia("(prefers-color-scheme: dark)").matches;
     aplicarTema(temaSalvo || (prefereEscuro ? "escuro" : "claro"));
     atualizarContador(cartoes.length);
-});
+}
+
