@@ -1,3 +1,5 @@
+import { navegarPara } from "../../../navegacao.js";
+
 const CHAVE_TEMA = "theme";
 
 // --- CONFIGURA O TEMA E A SOMBRA DO CABECALHO ---
@@ -77,15 +79,15 @@ function configurarSombraCabecalho(raiz) {
 function configurarBotaoPortal(raiz) {
     const botao = raiz.querySelector("#btnPortal");
     botao?.addEventListener("click", () => {
-        location.hash = "#/login";
+        navegarPara("/login");
     });
 }
 
-// --- BOTOES COM data-ir NAVEGAM PARA UMA ROTA INTERNA ---
+// --- BOTOES NAVEGAM PARA UMA ROTA INTERNA ---
 export function configurarBotoesInternos(raiz) {
     raiz.querySelectorAll("[data-ir]").forEach((elemento) => {
         elemento.addEventListener("click", () => {
-            location.hash = elemento.dataset.ir;
+            navegarPara(elemento.dataset.ir);
         });
     });
 }

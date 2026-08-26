@@ -1,3 +1,5 @@
+import { navegarPara, caminhoAtual } from "./navegacao.js";
+
 const BASE_API = "/api";
 const CHAVE_TOKEN = "token";
 
@@ -11,7 +13,9 @@ export async function api(caminho, { metodo = "GET", corpo, cabecalhos = {}, mul
     };
 
     const token = localStorage.getItem(CHAVE_TOKEN);
-    if (token) opcoes.headers.Authorization = `Bearer ${token}`;
+    if (token) {
+        opcoes.headers.Authorization = `Bearer ${token}`;
+    }
 
     if (corpo !== undefined && corpo !== null) {
         if (multipart) {
@@ -28,8 +32,8 @@ export async function api(caminho, { metodo = "GET", corpo, cabecalhos = {}, mul
 
     if (resposta.status === 401) {
         ["token", "refreshToken", "user", "usuarioId"].forEach(chave => localStorage.removeItem(chave));
-        if (location.hash !== "#/login") {
-            location.hash = "#/login";
+        if (caminhoAtual() !== "/login") {
+            navegarPara("/login");
         }
         throw new Error((dados && dados.message) || "Sessão expirada. Faça login novamente.");
     }
@@ -70,7 +74,7 @@ export function aplicarMascara(campo, funcaoMascara) {
     });
 }
 
-// --- FORMATA DATA ISO PARA dd/mm/aaaa ---
+// --- FORMATA DATA ---
 export function formatarData(iso) {
     if (!iso) {
         return "-";
@@ -78,7 +82,7 @@ export function formatarData(iso) {
     return new Date(iso).toLocaleDateString("pt-BR");
 }
 
-// --- FORMATA DATA/HORA ISO PARA dd/mm/aaaa hh:mm ---
+// --- FORMATA DATA/HORA ---
 export function formatarDataHora(iso) {
     if (!iso) {
         return "-";

@@ -1,4 +1,5 @@
 import { notificar } from "../../util.js";
+import { navegarPara } from "../../navegacao.js";
 
 const CHAVE_TEMA = "theme";
 
@@ -48,7 +49,7 @@ function configurarRolagemSuave(raiz, menu, burger) {
 function configurarBotoesPortal(raiz) {
     raiz.querySelectorAll("#btnPortal, #btnPortalHero, #btnPortalAlunos").forEach((botao) => {
         botao.addEventListener("click", () => {
-            location.hash = "#/login";
+            navegarPara("/login");
         });
     });
 }

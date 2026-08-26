@@ -6,6 +6,13 @@ import {
     encerrarSessao
 } from "./auth.js";
 import { notificar } from "./util.js";
+import {
+    caminhoAtual,
+    caminhoParaUrl,
+    navegarPara,
+    reescreverLinksInternos,
+    ativarInterceptacaoGlobal
+} from "./navegacao.js";
 
 const MODELOS = import.meta.glob("/src/templates/{shared,auth,dashboards,secretaria,web}/**/*.html", {
     query: "?raw",
@@ -22,7 +29,16 @@ async function carregarModelo(caminho) {
 
 // --- TABELA DE ROTAS ---
 const ROTAS = {
-    "#/home": {
+    "/central": {
+        modelo: "web/erp-central.html",
+        modulo: () => import("./pages/web/erp-central.js"),
+        publico: true,
+        modo: "limpo",
+        classe: "central-screen",
+        titulo: "Central de Acesso — Universidade Aura"
+    },
+
+    "/home": {
         modelo: "web/home.html",
         modulo: () => import("./pages/web/home.js"),
         publico: true,
@@ -32,7 +48,7 @@ const ROTAS = {
     },
 
     // --- PAGINAS INTERNAS DO SITE INSTITUCIONAL ---
-    "#/web/sobre/historia": {
+    "/web/sobre/historia": {
         modelo: "web/sobre/historia.html",
         modulo: () => import("./pages/web/sobre/historia.js"),
         publico: true,
@@ -41,7 +57,7 @@ const ROTAS = {
         titulo: "Nossa História — Colégio Áurea"
     },
 
-    "#/web/sobre/equipe": {
+    "/web/sobre/equipe": {
         modelo: "web/sobre/equipe.html",
         modulo: () => import("./pages/web/sobre/equipe.js"),
         publico: true,
@@ -50,7 +66,7 @@ const ROTAS = {
         titulo: "Nossa Equipe — Colégio Áurea"
     },
 
-    "#/login": {
+    "/login": {
         modelo: "auth/login.html",
         modulo: () => import("./pages/auth/login.js"),
         publico: true,
@@ -59,56 +75,56 @@ const ROTAS = {
         titulo: "Entrar"
     },
 
-    "#/aluno/dashboard": {
+    "/aluno/dashboard": {
         modelo: "dashboards/dashboard.html",
         modulo: () => import("./pages/aluno/dashboard.js"),
         perfis: ["ALUNO"],
         titulo: "Painel do Aluno"
     },
 
-    "#/professor/dashboard": {
+    "/professor/dashboard": {
         modelo: "dashboards/dashboard.html",
         modulo: () => import("./pages/professor/dashboard.js"),
         perfis: ["PROFESSOR"],
         titulo: "Painel do Professor"
     },
 
-    "#/coordenacao/dashboard": {
+    "/coordenacao/dashboard": {
         modelo: "dashboards/dashboard.html",
         modulo: () => import("./pages/coordenacao/dashboard.js"),
         perfis: ["COORDENADOR"],
         titulo: "Painel da Coordenação"
     },
 
-    "#/secretaria/dashboard": {
+    "/secretaria/dashboard": {
         modelo: "dashboards/dashboard.html",
         modulo: () => import("./pages/secretaria/dashboard.js"),
         perfis: ["SECRETARIA"],
         titulo: "Painel da Secretaria"
     },
 
-    "#/biblioteca/dashboard": {
+    "/biblioteca/dashboard": {
         modelo: "dashboards/dashboard.html",
         modulo: () => import("./pages/biblioteca/dashboard.js"),
         perfis: ["BIBLIOTECARIO"],
         titulo: "Painel da Biblioteca"
     },
 
-    "#/financeiro/dashboard": {
+    "/financeiro/dashboard": {
         modelo: "dashboards/dashboard.html",
         modulo: () => import("./pages/financeiro/dashboard.js"),
         perfis: ["FINANCEIRO"],
         titulo: "Painel Financeiro"
     },
 
-    "#/responsavel/dashboard": {
+    "/responsavel/dashboard": {
         modelo: "dashboards/dashboard.html",
         modulo: () => import("./pages/responsavel/dashboard.js"),
         perfis: ["RESPONSAVEL"],
         titulo: "Painel do Responsável"
     },
 
-    "#/admin/dashboard": {
+    "/admin/dashboard": {
         modelo: "dashboards/dashboard.html",
         modulo: () => import("./pages/admin/dashboard.js"),
         perfis: ["ADMIN"],
@@ -116,25 +132,25 @@ const ROTAS = {
     },
 
     // --- CADASTROS DA SECRETARIA ---
-    "#/secretaria/alunos": {
+    "/secretaria/alunos": {
         modelo: "secretaria/alunos.html",
         modulo: () => import("./pages/secretaria/alunos.js"),
         perfis: ["SECRETARIA", "COORDENADOR", "ADMIN"],
         titulo: "Alunos"
     },
-    "#/secretaria/professores": {
+    "/secretaria/professores": {
         modelo: "secretaria/professores.html",
         modulo: () => import("./pages/secretaria/professores.js"),
         perfis: ["SECRETARIA", "COORDENADOR", "ADMIN"],
         titulo: "Professores"
     },
-    "#/secretaria/responsaveis": {
+    "/secretaria/responsaveis": {
         modelo: "secretaria/responsaveis.html",
         modulo: () => import("./pages/secretaria/responsaveis.js"),
         perfis: ["SECRETARIA", "COORDENADOR", "ADMIN"],
         titulo: "Responsáveis"
     },
-    "#/secretaria/funcionarios": {
+    "/secretaria/funcionarios": {
         modelo: "secretaria/funcionarios.html",
         modulo: () => import("./pages/secretaria/funcionarios.js"),
         perfis: ["SECRETARIA", "COORDENADOR", "ADMIN"],
@@ -168,6 +184,7 @@ async function garantirLayout() {
         app.innerHTML = await carregarModelo("shared/shell.html");
         document.getElementById("menuLateral").innerHTML = await carregarModelo("shared/sidebar.html");
         document.getElementById("cabecalho").innerHTML = await carregarModelo("shared/header.html");
+        reescreverLinksInternos(app);
         ligarEventosCabecalho();
         layoutMontado = true;
     }
@@ -181,7 +198,7 @@ function ligarEventosCabecalho() {
     document.getElementById("btnTema")?.addEventListener("click", alternarTema);
     document.getElementById("btnSair")?.addEventListener("click", () => {
         encerrarSessao();
-        location.hash = "#/login";
+        navegarPara("/login");
     });
     document.getElementById("btnAlternarMenu")?.addEventListener("click", () => {
         document.getElementById("app").classList.toggle("sidebar-open");
@@ -207,9 +224,10 @@ function filtrarMenuPorPerfil() {
 }
 
 // --- DESTACA O LINK ATIVO E ATUALIZA O TÍTULO DA PÁGINA ---
-function marcarRotaAtiva(hash, titulo) {
+function marcarRotaAtiva(caminho, titulo) {
+    const urlAtual = caminhoParaUrl(caminho);
     document.querySelectorAll(".sidebar-nav .nav-link").forEach(link => {
-        link.classList.toggle("active", link.getAttribute("href") === hash);
+        link.classList.toggle("active", link.getAttribute("href") === urlAtual);
     });
 
     const tituloElemento = document.querySelector("[data-titulo-pagina]");
@@ -220,33 +238,33 @@ function marcarRotaAtiva(hash, titulo) {
 
 // --- RENDERIZAÇÃO DA ROTA ATUAL ---
 async function renderizar() {
-    const hash = location.hash || "#/";
+    const caminho = caminhoAtual();
 
-    if (hash === "#/" || hash === "") {
-        location.hash = estaAutenticado() ? dashboardDoPerfil(obterUsuario().role) : "#/home";
+    if (caminho === "/" || caminho === "") {
+        navegarPara(estaAutenticado() ? dashboardDoPerfil(obterUsuario().role) : "/central", { substituir: true });
         return;
     }
 
-    const rota = ROTAS[hash];
+    const rota = ROTAS[caminho];
 
     if (!rota) {
-        location.hash = estaAutenticado() ? dashboardDoPerfil(obterUsuario().role) : "#/home";
+        navegarPara(estaAutenticado() ? dashboardDoPerfil(obterUsuario().role) : "/central", { substituir: true });
         return;
     }
 
     if (!rota.publico && !estaAutenticado()) {
-        location.hash = "#/login";
+        navegarPara("/login", { substituir: true });
         return;
     }
 
-    if (rota.publico && hash === "#/login" && estaAutenticado()) {
-        location.hash = dashboardDoPerfil(obterUsuario().role);
+    if (rota.publico && caminho === "/login" && estaAutenticado()) {
+        navegarPara(dashboardDoPerfil(obterUsuario().role), { substituir: true });
         return;
     }
 
     if (rota.perfis && !possuiPerfil(rota.perfis)) {
         notificar("Você não tem permissão para acessar esta área.", "error");
-        location.hash = dashboardDoPerfil(obterUsuario()?.role);
+        navegarPara(dashboardDoPerfil(obterUsuario()?.role), { substituir: true });
         return;
     }
 
@@ -256,6 +274,7 @@ async function renderizar() {
         layoutMontado = false;
         app.className = rota.classe || "auth-screen";
         app.innerHTML = await carregarModelo(rota.modelo);
+        reescreverLinksInternos(app);
         const modulo = await rota.modulo();
         modulo.montar?.(app, {
             rota
@@ -264,7 +283,8 @@ async function renderizar() {
         await garantirLayout();
         const conteudo = document.getElementById("conteudo");
         conteudo.innerHTML = await carregarModelo(rota.modelo);
-        marcarRotaAtiva(hash, rota.titulo);
+        reescreverLinksInternos(conteudo);
+        marcarRotaAtiva(caminho, rota.titulo);
         document.getElementById("app").classList.remove("sidebar-open");
         const modulo = await rota.modulo();
         modulo.montar?.(conteudo, {
@@ -274,6 +294,7 @@ async function renderizar() {
 }
 
 aplicarTemaSalvo();
-window.addEventListener("hashchange", renderizar);
+ativarInterceptacaoGlobal();
+window.addEventListener("popstate", renderizar);
 window.addEventListener("DOMContentLoaded", renderizar);
 

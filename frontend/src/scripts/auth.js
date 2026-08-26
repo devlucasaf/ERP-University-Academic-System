@@ -6,19 +6,19 @@ const CHAVE_USUARIO = "user";
 
 // --- MAPA DE REDIRECIONAMENTO PÓS-LOGIN POR PERFIL ---
 export const DASHBOARD_POR_PERFIL = {
-    ALUNO: "#/aluno/dashboard",
-    PROFESSOR: "#/professor/dashboard",
-    COORDENADOR: "#/coordenacao/dashboard",
-    SECRETARIA: "#/secretaria/dashboard",
-    BIBLIOTECARIO: "#/biblioteca/dashboard",
-    FINANCEIRO: "#/financeiro/dashboard",
-    RESPONSAVEL: "#/responsavel/dashboard",
-    ADMIN: "#/admin/dashboard"
+    ALUNO: "/aluno/dashboard",
+    PROFESSOR: "/professor/dashboard",
+    COORDENADOR: "/coordenacao/dashboard",
+    SECRETARIA: "/secretaria/dashboard",
+    BIBLIOTECARIO: "/biblioteca/dashboard",
+    FINANCEIRO: "/financeiro/dashboard",
+    RESPONSAVEL: "/responsavel/dashboard",
+    ADMIN: "/admin/dashboard"
 };
 
 // --- RESOLVE A ROTA DO DASHBOARD DE UM PERFIL ---
 export function dashboardDoPerfil(perfil) {
-    return DASHBOARD_POR_PERFIL[perfil] || "#/login";
+    return DASHBOARD_POR_PERFIL[perfil] || "/login";
 }
 
 // --- AUTENTICA E GRAVA A SESSÃO ---
