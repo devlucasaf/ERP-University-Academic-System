@@ -1,0 +1,808 @@
+<div class="cc-page">
+
+    <style>
+        .cc-page {
+            --cc-blue: var(--color-primary);
+            --cc-blue-soft: rgba(30, 64, 175, .08);
+            --cc-red: var(--color-accent);
+            color: var(--text-primary);
+            background: var(--bg-surface);
+        }
+
+        .cc-container {
+            width: 100%;
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        .cc-header {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: color-mix(in srgb, var(--bg-surface) 94%, transparent);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cc-nav {
+            min-height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-lg);
+        }
+
+        .cc-brand {
+            display: flex;
+            align-items: center;
+            gap: .7rem;
+            font-weight: 700;
+        }
+
+        .cc-brand-mark {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            color: #fff;
+            background: linear-gradient(135deg, var(--color-primary), #3b82f6);
+        }
+
+        .cc-brand small {
+            display: block;
+            color: var(--text-muted);
+            font-size: .72rem;
+            font-weight: 500;
+        }
+
+        .cc-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .cc-nav-links a {
+            color: var(--text-muted);
+            font-size: .92rem;
+            font-weight: 600;
+        }
+
+        .cc-nav-links a:hover {
+            color: var(--color-primary);
+        }
+
+        .cc-hero {
+            overflow: hidden;
+            background:
+                radial-gradient(800px 360px at 90% 0%, rgba(59, 130, 246, .18), transparent),
+                radial-gradient(650px 320px at 0% 80%, rgba(30, 64, 175, .10), transparent),
+                linear-gradient(180deg, var(--bg-body), var(--bg-surface));
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cc-hero-grid {
+            min-height: 500px;
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 3rem;
+            align-items: center;
+            padding: 4.5rem 0;
+        }
+
+        .cc-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            color: var(--color-primary);
+            background: var(--cc-blue-soft);
+            border: 1px solid rgba(59, 130, 246, .16);
+            border-radius: 999px;
+            padding: .4rem .8rem;
+            font-size: .78rem;
+            font-weight: 800;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+        }
+
+        .cc-hero h1 {
+            max-width: 760px;
+            margin: 1rem 0;
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            line-height: 1.04;
+            letter-spacing: -.04em;
+        }
+
+        .cc-hero h1 span {
+            color: var(--color-primary);
+        }
+
+        .cc-hero p {
+            max-width: 650px;
+            color: var(--text-muted);
+            font-size: 1.08rem;
+            line-height: 1.75;
+        }
+
+        .cc-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .8rem;
+            margin-top: 1.6rem;
+        }
+
+        .cc-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .5rem;
+            min-height: 44px;
+            padding: .7rem 1rem;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .cc-btn-primary {
+            color: #fff;
+            background: var(--color-primary);
+        }
+
+        .cc-btn-primary:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .cc-btn-outline {
+            color: var(--text-primary);
+            border-color: var(--border-color);
+            background: var(--bg-surface);
+        }
+
+        .cc-btn-outline:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .cc-hero-card {
+            position: relative;
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 1.5rem;
+            background: var(--bg-elevated);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cc-code-window {
+            overflow: hidden;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        .cc-window-top {
+            display: flex;
+            gap: .4rem;
+            padding: .8rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,.08);
+        }
+
+        .cc-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #64748b;
+        }
+
+        .cc-code {
+            padding: 1.25rem;
+            font: 500 .86rem/1.8 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        }
+
+        .cc-code .blue { color: #60a5fa; }
+        .cc-code .green { color: #86efac; }
+        .cc-code .yellow { color: #fde68a; }
+        .cc-code .muted { color: #94a3b8; }
+
+        .cc-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--border-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .cc-stat {
+            padding: 1.25rem;
+            background: var(--bg-surface);
+        }
+
+        .cc-stat strong {
+            display: block;
+            color: var(--color-primary);
+            font-size: 1.45rem;
+            line-height: 1.2;
+        }
+
+        .cc-stat span {
+            color: var(--text-muted);
+            font-size: .8rem;
+        }
+
+        .cc-section {
+            padding: 5rem 0;
+        }
+
+        .cc-section-alt {
+            background: var(--bg-body);
+        }
+
+        .cc-section-title {
+            max-width: 720px;
+            margin-bottom: 2rem;
+        }
+
+        .cc-section-title h2 {
+            margin: .35rem 0 .6rem;
+            font-size: clamp(1.7rem, 3vw, 2.35rem);
+        }
+
+        .cc-section-title p {
+            color: var(--text-muted);
+        }
+
+        .cc-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .cc-card {
+            padding: 1.4rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            background: var(--bg-surface);
+            box-shadow: var(--shadow);
+        }
+
+        .cc-card-icon {
+            width: 44px;
+            height: 44px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            color: var(--color-primary);
+            background: var(--cc-blue-soft);
+        }
+
+        .cc-card h3 {
+            margin-bottom: .45rem;
+            font-size: 1.05rem;
+        }
+
+        .cc-card p {
+            color: var(--text-muted);
+            font-size: .92rem;
+            line-height: 1.65;
+        }
+
+        .cc-curriculum {
+            display: grid;
+            gap: .7rem;
+        }
+
+        .cc-semester {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            background: var(--bg-surface);
+            overflow: hidden;
+        }
+
+        .cc-semester button {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1rem 1.2rem;
+            border: 0;
+            background: transparent;
+            color: var(--text-primary);
+            cursor: pointer;
+            text-align: left;
+            font-weight: 800;
+        }
+
+        .cc-semester button:hover {
+            background: var(--bg-body);
+        }
+
+        .cc-semester-list {
+            display: none;
+            grid-template-columns: repeat(2, 1fr);
+            gap: .55rem 1rem;
+            padding: 0 1.2rem 1.2rem;
+        }
+
+        .cc-semester.aberto .cc-semester-list {
+            display: grid;
+        }
+
+        .cc-subject {
+            display: flex;
+            align-items: center;
+            gap: .65rem;
+            color: var(--text-muted);
+            font-size: .9rem;
+        }
+
+        .cc-subject::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            flex: 0 0 7px;
+            border-radius: 50%;
+            background: var(--color-primary);
+        }
+
+        .cc-career {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .cc-career-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .65rem;
+            margin-top: 1rem;
+        }
+
+        .cc-career-item {
+            padding: .9rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-surface);
+            color: var(--text-muted);
+            font-size: .9rem;
+        }
+
+        .cc-cta {
+            padding: 2rem;
+            border-radius: 22px;
+            background:
+                linear-gradient(135deg, rgba(30,64,175,.96), rgba(59,130,246,.88));
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .cc-cta h2 {
+            margin-bottom: .4rem;
+        }
+
+        .cc-cta p {
+            color: rgba(255,255,255,.8);
+            max-width: 620px;
+        }
+
+        .cc-cta .cc-btn {
+            flex: 0 0 auto;
+            background: #fff;
+            color: #1e40af;
+        }
+
+        .cc-footer {
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: .82rem;
+        }
+
+        @media (max-width: 850px) {
+            .cc-nav-links {
+                display: none;
+            }
+
+            .cc-hero-grid,
+            .cc-career {
+                grid-template-columns: 1fr;
+            }
+
+            .cc-stats,
+            .cc-grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cc-cta {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .cc-container {
+                padding: 0 1rem;
+            }
+
+            .cc-hero-grid {
+                padding: 3rem 0;
+            }
+
+            .cc-stats,
+            .cc-grid-3,
+            .cc-career-list,
+            .cc-semester-list {
+                grid-template-columns: 1fr;
+            }
+
+            .cc-section {
+                padding: 3.5rem 0;
+            }
+        }
+    </style>
+
+    <header class="cc-header">
+        <div class="cc-container cc-nav">
+            <a class="cc-brand" href="#/home" aria-label="Voltar para a página inicial">
+                <span class="cc-brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="16 18 22 12 16 6"></polyline>
+                        <polyline points="8 6 2 12 8 18"></polyline>
+                    </svg>
+                </span>
+                <span>
+                    Universidade Aura
+                    <small>Graduação</small>
+                </span>
+            </a>
+
+            <nav class="cc-nav-links" aria-label="Navegação do curso">
+                <a href="#cc-sobre">O curso</a>
+                <a href="#cc-matriz">Matriz curricular</a>
+                <a href="#cc-carreira">Carreira</a>
+            </nav>
+
+            <a class="cc-btn cc-btn-primary" href="#/login">Portal do Aluno</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="cc-hero">
+            <div class="cc-container cc-hero-grid">
+                <div>
+                    <span class="cc-eyebrow">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                        Graduação · Bacharelado
+                    </span>
+
+                    <h1>Ciência da <span>Computação</span></h1>
+
+                    <p>
+                        Aprenda a projetar software, resolver problemas complexos e transformar ideias
+                        em soluções digitais. Uma formação completa que combina fundamentos da computação,
+                        programação, engenharia de software, dados e inovação.
+                    </p>
+
+                    <div class="cc-actions">
+                        <a class="cc-btn cc-btn-primary" href="#cc-matriz">Conhecer a matriz curricular</a>
+                        <a class="cc-btn cc-btn-outline" href="#cc-carreira">Ver possibilidades de carreira</a>
+                    </div>
+                </div>
+
+                <div class="cc-hero-card" aria-label="Exemplo de código">
+                    <div class="cc-code-window">
+                        <div class="cc-window-top">
+                            <span class="cc-dot"></span>
+                            <span class="cc-dot"></span>
+                            <span class="cc-dot"></span>
+                        </div>
+                        <pre class="cc-code"><span class="blue">public class</span> <span class="green">Futuro</span> {
+    <span class="blue">public static void</span> <span class="yellow">main</span>(String[] args) {
+        <span class="blue">var</span> conhecimento = <span class="green">"Ciência da Computação"</span>;
+        <span class="blue">var</span> carreira = <span class="green">"sem limites"</span>;
+
+        System.out.println(
+            conhecimento + <span class="muted">" → "</span> + carreira
+        );
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cc-section" id="cc-sobre">
+            <div class="cc-container">
+                <div class="cc-stats">
+                    <div class="cc-stat">
+                        <strong>8</strong>
+                        <span>semestres</span>
+                    </div>
+                    <div class="cc-stat">
+                        <strong>3.200h</strong>
+                        <span>carga horária</span>
+                    </div>
+                    <div class="cc-stat">
+                        <strong>Bacharelado</strong>
+                        <span>nível superior</span>
+                    </div>
+                    <div class="cc-stat">
+                        <strong>Presencial</strong>
+                        <span>modalidade</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cc-section cc-section-alt">
+            <div class="cc-container">
+                <div class="cc-section-title">
+                    <span class="cc-eyebrow">Formação</span>
+                    <h2>O que você vai aprender</h2>
+                    <p>
+                        Uma trilha progressiva: dos fundamentos matemáticos e computacionais até
+                        projetos aplicados e desenvolvimento de soluções completas.
+                    </p>
+                </div>
+
+                <div class="cc-grid-3">
+                    <article class="cc-card">
+                        <div class="cc-card-icon">
+                            <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M8 9l3 3-3 3"></path>
+                                <path d="M13 15h3"></path>
+                                <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                            </svg>
+                        </div>
+                        <h3>Programação</h3>
+                        <p>Estruturas de dados, algoritmos, orientação a objetos, paradigmas e desenvolvimento de aplicações.</p>
+                    </article>
+
+                    <article class="cc-card">
+                        <div class="cc-card-icon">
+                            <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <ellipse cx="12" cy="6" rx="8" ry="3"></ellipse>
+                                <path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"></path>
+                                <path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"></path>
+                            </svg>
+                        </div>
+                        <h3>Dados e IA</h3>
+                        <p>Banco de dados, estatística, inteligência artificial, aprendizado de máquina e análise de informações.</p>
+                    </article>
+
+                    <article class="cc-card">
+                        <div class="cc-card-icon">
+                            <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3Z"></path>
+                                <path d="M12 12l8-4.5"></path>
+                                <path d="M12 12v9"></path>
+                                <path d="M12 12L4 7.5"></path>
+                            </svg>
+                        </div>
+                        <h3>Engenharia de Software</h3>
+                        <p>Arquitetura, testes, versionamento, métodos ágeis, requisitos e construção de sistemas escaláveis.</p>
+                    </article>
+
+                    <article class="cc-card">
+                        <div class="cc-card-icon">
+                            <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                                <path d="M7 8h10M7 12h6M7 16h4"></path>
+                            </svg>
+                        </div>
+                        <h3>Sistemas e Redes</h3>
+                        <p>Arquitetura de computadores, sistemas operacionais, redes, computação em nuvem e infraestrutura.</p>
+                    </article>
+
+                    <article class="cc-card">
+                        <div class="cc-card-icon">
+                            <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2l2.4 6.1L21 10l-5 4.1 1.5 6.4L12 17l-5.5 3.5L8 14.1 3 10l6.6-1.9L12 2Z"></path>
+                            </svg>
+                        </div>
+                        <h3>Inovação</h3>
+                        <p>Projetos práticos, resolução de problemas e desenvolvimento de produtos usando tecnologia.</p>
+                    </article>
+
+                    <article class="cc-card">
+                        <div class="cc-card-icon">
+                            <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3v18"></path>
+                                <path d="M5 8h14"></path>
+                                <path d="M7 8l-3 5h6l-3-5Z"></path>
+                                <path d="M17 8l-3 5h6l-3-5Z"></path>
+                            </svg>
+                        </div>
+                        <h3>Fundamentos</h3>
+                        <p>Matemática, lógica, teoria da computação e fundamentos que sustentam a evolução profissional.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="cc-section" id="cc-matriz">
+            <div class="cc-container">
+                <div class="cc-section-title">
+                    <span class="cc-eyebrow">Matriz curricular</span>
+                    <h2>Uma jornada de 8 semestres</h2>
+                    <p>Clique em cada semestre para visualizar as principais disciplinas.</p>
+                </div>
+
+                <div class="cc-curriculum">
+                    <div class="cc-semester aberto">
+                        <button type="button" aria-expanded="true">
+                            <span>1º semestre · Fundamentos</span>
+                            <span>⌃</span>
+                        </button>
+                        <div class="cc-semester-list">
+                            <span class="cc-subject">Algoritmos e Programação I</span>
+                            <span class="cc-subject">Matemática Discreta</span>
+                            <span class="cc-subject">Introdução à Computação</span>
+                            <span class="cc-subject">Cálculo Diferencial e Integral I</span>
+                            <span class="cc-subject">Comunicação e Expressão</span>
+                        </div>
+                    </div>
+
+                    <div class="cc-semester">
+                        <button type="button" aria-expanded="false">
+                            <span>2º semestre · Programação</span>
+                            <span>⌄</span>
+                        </button>
+                        <div class="cc-semester-list">
+                            <span class="cc-subject">Algoritmos e Programação II</span>
+                            <span class="cc-subject">Estruturas de Dados I</span>
+                            <span class="cc-subject">Álgebra Linear</span>
+                            <span class="cc-subject">Arquitetura de Computadores</span>
+                            <span class="cc-subject">Cálculo Diferencial e Integral II</span>
+                        </div>
+                    </div>
+
+                    <div class="cc-semester">
+                        <button type="button" aria-expanded="false">
+                            <span>3º semestre · Sistemas</span>
+                            <span>⌄</span>
+                        </button>
+                        <div class="cc-semester-list">
+                            <span class="cc-subject">Programação Orientada a Objetos</span>
+                            <span class="cc-subject">Estruturas de Dados II</span>
+                            <span class="cc-subject">Sistemas Operacionais</span>
+                            <span class="cc-subject">Banco de Dados I</span>
+                            <span class="cc-subject">Probabilidade e Estatística</span>
+                        </div>
+                    </div>
+
+                    <div class="cc-semester">
+                        <button type="button" aria-expanded="false">
+                            <span>4º semestre · Engenharia</span>
+                            <span>⌄</span>
+                        </button>
+                        <div class="cc-semester-list">
+                            <span class="cc-subject">Engenharia de Software I</span>
+                            <span class="cc-subject">Banco de Dados II</span>
+                            <span class="cc-subject">Redes de Computadores</span>
+                            <span class="cc-subject">Desenvolvimento Web</span>
+                            <span class="cc-subject">Análise e Projeto de Sistemas</span>
+                        </div>
+                    </div>
+
+                    <div class="cc-semester">
+                        <button type="button" aria-expanded="false">
+                            <span>5º semestre · Desenvolvimento</span>
+                            <span>⌄</span>
+                        </button>
+                        <div class="cc-semester-list">
+                            <span class="cc-subject">Engenharia de Software II</span>
+                            <span class="cc-subject">Desenvolvimento de Aplicações</span>
+                            <span class="cc-subject">Computação em Nuvem</span>
+                            <span class="cc-subject">Segurança da Informação</span>
+                            <span class="cc-subject">Interação Humano-Computador</span>
+                        </div>
+                    </div>
+
+                    <div class="cc-semester">
+                        <button type="button" aria-expanded="false">
+                            <span>6º semestre · Inteligência</span>
+                            <span>⌄</span>
+                        </button>
+                        <div class="cc-semester-list">
+                            <span class="cc-subject">Inteligência Artificial</span>
+                            <span class="cc-subject">Aprendizado de Máquina</span>
+                            <span class="cc-subject">Computação Distribuída</span>
+                            <span class="cc-subject">DevOps e Integração Contínua</span>
+                            <span class="cc-subject">Empreendedorismo e Inovação</span>
+                        </div>
+                    </div>
+
+                    <div class="cc-semester">
+                        <button type="button" aria-expanded="false">
+                            <span>7º semestre · Especialização</span>
+                            <span>⌄</span>
+                        </button>
+                        <div class="cc-semester-list">
+                            <span class="cc-subject">Computação Gráfica</span>
+                            <span class="cc-subject">Sistemas Inteligentes</span>
+                            <span class="cc-subject">Tópicos Avançados em Computação</span>
+                            <span class="cc-subject">Auditoria e Governança de TI</span>
+                            <span class="cc-subject">Optativa I</span>
+                            <span class="cc-subject">Projeto de Conclusão I</span>
+                        </div>
+                    </div>
+
+                    <div class="cc-semester">
+                        <button type="button" aria-expanded="false">
+                            <span>8º semestre · Conclusão</span>
+                            <span>⌄</span>
+                        </button>
+                        <div class="cc-semester-list">
+                            <span class="cc-subject">Arquitetura de Software</span>
+                            <span class="cc-subject">Segurança de Sistemas</span>
+                            <span class="cc-subject">Optativa II</span>
+                            <span class="cc-subject">Atividades Complementares</span>
+                            <span class="cc-subject">Estágio Supervisionado</span>
+                            <span class="cc-subject">Projeto de Conclusão II</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cc-section cc-section-alt" id="cc-carreira">
+            <div class="cc-container">
+                <div class="cc-career">
+                    <div>
+                        <span class="cc-eyebrow">Mercado de trabalho</span>
+                        <h2 style="margin:.7rem 0 .6rem;">Onde você pode chegar</h2>
+                        <p class="muted">
+                            A formação em Ciência da Computação abre portas para diferentes áreas da tecnologia,
+                            em empresas de software, bancos, indústrias, startups, órgãos públicos e centros de pesquisa.
+                        </p>
+                    </div>
+
+                    <div class="cc-card">
+                        <strong>Possíveis áreas de atuação</strong>
+                        <div class="cc-career-list">
+                            <div class="cc-career-item">Desenvolvimento de Software</div>
+                            <div class="cc-career-item">Engenharia de Dados</div>
+                            <div class="cc-career-item">Cibersegurança</div>
+                            <div class="cc-career-item">Cloud Computing</div>
+                            <div class="cc-career-item">Inteligência Artificial</div>
+                            <div class="cc-career-item">DevOps</div>
+                            <div class="cc-career-item">Arquitetura de Software</div>
+                            <div class="cc-career-item">Pesquisa e Inovação</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cc-section">
+            <div class="cc-container">
+                <div class="cc-cta">
+                    <div>
+                        <h2>Pronto para começar sua jornada?</h2>
+                        <p>
+                            Acesse o portal acadêmico para acompanhar sua vida universitária,
+                            disciplinas, atividades e informações do curso.
+                        </p>
+                    </div>
+                    <a class="cc-btn" href="#/login">Acessar Portal do Aluno →</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="cc-footer">
+        <div class="cc-container">
+            Universidade Aura de Xique Xique · Graduação em Ciência da Computação
+        </div>
+    </footer>
+</div>
