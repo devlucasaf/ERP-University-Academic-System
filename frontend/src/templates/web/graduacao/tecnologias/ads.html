@@ -1,26 +1,187 @@
-<div class="cc-page" style="--cc-primary: #059669; --cc-primary-soft: rgba(5, 150, 105, 0.08);">
-    <header class="cc-header">
-        <div class="cc-container cc-nav">
-            <a class="cc-brand" href="#/home">
-        <span class="cc-brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="16 18 22 12 16 6"></polyline>
-            <polyline points="8 6 2 12 8 18"></polyline>
-          </svg>
-        </span>
-                <span>
-          Universidade Aura
-          <small>Graduação</small>
-        </span>
+<div class="site">
+    <header id="siteHeader" class="site-header">
+        <div class="site-container site-nav">
+
+            <a href="#/home" class="site-brand" aria-label="UniAura - Página inicial">
+                <img
+                        src="/img/uniaura.png"
+                        alt=""
+                        class="site-brand-logo"
+                />
+                <span class="site-brand-text">
+                    <strong>UniAura</strong>
+                </span>
             </a>
-            <nav class="cc-nav-links" aria-label="Navegação do curso">
-                <a href="#cc-sobre">O curso</a>
-                <a href="#cc-matriz">Matriz curricular</a>
-                <a href="#cc-carreira">Carreira</a>
+
+            <nav id="siteMenu" class="site-menu" aria-label="Navegação principal">
+
+                <div class="site-menu-item" data-mega>
+                    <a class="site-link site-link-com-mega" href="#/home" aria-haspopup="true" aria-expanded="false">
+                        A Universidade
+                        <svg class="site-link-seta" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </a>
+
+                    <div class="site-mega" role="menu" aria-label="Sobre a UniAura">
+                        <div class="site-mega-grade">
+                            <a href="#/web/sobre/historia" class="site-mega-link" role="menuitem">
+                                <strong>Nossa História</strong>
+                                <span>35 anos de excelência acadêmica</span>
+                            </a>
+                            <a href="#/web/sobre/equipe" class="site-mega-link" role="menuitem">
+                                <strong>Nossa Equipe</strong>
+                                <span>Quem faz a universidade</span>
+                            </a>
+                            <a href="#/home" class="site-mega-link" role="menuitem">
+                                <strong>Estrutura Física</strong>
+                                <span>Salas, laboratórios e biblioteca</span>
+                            </a>
+                            <a href="#/home" class="site-mega-link" role="menuitem">
+                                <strong>Regimento Universitário</strong>
+                                <span>Normas e diretrizes</span>
+                            </a>
+                            <a href="#/home" class="site-mega-link" role="menuitem">
+                                <strong>Prêmios e Rankings</strong>
+                                <span>Reconhecimentos nacionais</span>
+                            </a>
+                        </div>
+
+                        <div class="site-mega-destaque">
+                            <span class="site-mega-eyebrow">Conheça</span>
+                            <h4>UniAura, 35 anos de tradição</h4>
+                            <p>Uma universidade que forma líderes e transforma a sociedade.</p>
+                            <a href="#/web/sobre/historia" class="site-mega-cta">Nossa história completa →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="site-menu-item" data-mega>
+                    <a class="site-link site-link-com-mega" href="#/graduacao/cursos" aria-haspopup="true" aria-expanded="false">
+                        Cursos
+                        <svg class="site-link-seta" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </a>
+
+                    <div class="site-mega" role="menu" aria-label="Cursos de graduação e pós">
+                        <div class="site-mega-grade">
+                            <div class="site-mega-item-flyout" data-submenu>
+                                <button type="button" class="site-mega-link-gatilho" aria-haspopup="true" aria-expanded="false">
+                                    <span class="site-mega-link-texto">
+                                        <strong>Graduação</strong>
+                                        <span>Bacharelados e tecnólogos</span>
+                                    </span>
+                                    <svg class="site-mega-seta-submenu" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <polyline points="9 6 15 12 9 18"></polyline>
+                                    </svg>
+                                </button>
+
+                                <div class="site-submenu" role="menu" aria-label="Cursos de Graduação">
+                                    <a href="#/graduacao/ciencia-da-computacao" class="site-submenu-link" role="menuitem">Ciência da Computação</a>
+                                    <a href="#/graduacao/ads" class="site-submenu-link" role="menuitem">Análise e Desenvolvimento de Sistemas</a>
+                                    <a href="#" class="site-submenu-link" role="menuitem">Engenharia de Software</a>
+                                    <a href="#" class="site-submenu-link" role="menuitem">Engenharia Civil</a>
+                                    <a href="#" class="site-submenu-link" role="menuitem">Engenharia de Produção</a>
+                                    <a href="#" class="site-submenu-link" role="menuitem">Engenharia Elétrica</a>
+                                    <a href="#" class="site-submenu-link" role="menuitem">Administração</a>
+                                    <a href="#" class="site-submenu-link" role="menuitem">Arquitetura e Urbanismo</a>
+                                    <a href="#" class="site-submenu-link" role="menuitem">Biomedicina</a>
+                                </div>
+                            </div>
+                            <a href="#" class="site-mega-link" role="menuitem">
+                                <strong>Pós-Graduação</strong>
+                                <span>Especialização, mestrado e doutorado</span>
+                            </a>
+                            <a href="#" class="site-mega-link" role="menuitem">
+                                <strong>Cursos Técnicos</strong>
+                                <span>Formação profissional rápida</span>
+                            </a>
+                            <a href="#" class="site-mega-link" role="menuitem">
+                                <strong>Idiomas</strong>
+                                <span>Inglês, espanhol e libras</span>
+                            </a>
+                            <a href="#" class="site-mega-link" role="menuitem">
+                                <strong>Extensão Universitária</strong>
+                                <span>Projetos comunitários</span>
+                            </a>
+                            <a href="#" class="site-mega-link" role="menuitem">
+                                <strong>Pesquisa</strong>
+                                <span>Grupos e laboratórios</span>
+                            </a>
+                        </div>
+
+                        <div class="site-mega-destaque">
+                            <span class="site-mega-eyebrow">Calendário</span>
+                            <h4>Ano letivo 2027</h4>
+                            <p>Inscrições abertas para o vestibular e para a pós-graduação.</p>
+                            <a href="#/home" class="site-mega-cta">Fale com a secretaria →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="site-link" href="#/home">Notícias</a>
+                <a class="site-link" href="#/home">Contato</a>
             </nav>
-            <a class="cc-btn cc-btn-primary" href="#/login">Portal do Aluno</a>
+
+            <div class="site-actions">
+
+                <button
+                        id="btnTemaSite"
+                        class="site-tema-toggle"
+                        type="button"
+                        aria-label="Alternar tema claro e escuro"
+                        title="Alternar tema"
+                >
+                    <span class="site-tema-icone site-tema-sol" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="4"></circle>
+                            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+                        </svg>
+                    </span>
+                    <span class="site-tema-icone site-tema-lua" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </span>
+                </button>
+
+                <button id="btnPortal" class="btn btn-primary site-btn-entrar" type="button">
+                    Portal do Aluno
+                </button>
+
+                <button id="siteBurger" class="site-burger" type="button" aria-label="Abrir menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
     </header>
+
+    <div class="cc-page" style="--cc-primary: #059669; --cc-primary-soft: rgba(5, 150, 105, 0.08);">
+
+        <nav class="cc-subnav" id="ccSubnav" aria-label="Seções do curso">
+            <div class="cc-container cc-subnav-inner">
+                <span class="cc-subnav-curso">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="16 18 22 12 16 6"></polyline>
+                        <polyline points="8 6 2 12 8 18"></polyline>
+                    </svg>
+                    Análise e Desenvolvimento de Sistemas
+                </span>
+
+                <div class="cc-subnav-links">
+                    <a class="cc-subnav-link" href="#cc-sobre">O curso</a>
+                    <a class="cc-subnav-link" href="#cc-matriz">Matriz curricular</a>
+                    <a class="cc-subnav-link" href="#cc-carreira">Carreira</a>
+                </div>
+            </div>
+
+            <span class="cc-progresso" aria-hidden="true">
+                <span class="cc-progresso-barra" data-progresso></span>
+            </span>
+        </nav>
 
     <main>
         <section class="cc-hero">
@@ -263,9 +424,10 @@
         </section>
     </main>
 
-    <footer class="cc-footer">
-        <div class="cc-container">
-            Universidade Aura de Xique Xique · Graduação em Análise e Desenvolvimento de Sistemas
-        </div>
-    </footer>
+        <footer class="cc-footer">
+            <div class="cc-container">
+                Universidade Aura de Xique Xique · Graduação em Análise e Desenvolvimento de Sistemas
+            </div>
+        </footer>
+    </div>
 </div>
