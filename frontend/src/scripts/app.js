@@ -49,7 +49,7 @@ const ROTAS = {
 
     // --- PAGINAS INTERNAS DO SITE INSTITUCIONAL ---
     "/web/sobre/historia": {
-        modelo: "web/sobre/historia.html",
+        modelo: "../templates/web/sobre/historia.html",
         modulo: () => import("./pages/web/sobre/historia.js"),
         publico: true,
         modo: "limpo",
@@ -57,13 +57,13 @@ const ROTAS = {
         titulo: "Nossa História — Colégio Áurea"
     },
 
-    "/web/sobre/equipe": {
-        modelo: "web/sobre/equipe.html",
-        modulo: () => import("./pages/web/sobre/equipe.js"),
+    "/graduacao/ciencia-da-computacao": {
+        modelo: "web/graduacao/tecnologia/ciencia-da-computacao.html",
+        modulo: () => import("./pages/web/graduacao/tecnologia/ciencia-da-computacao.js"),
         publico: true,
         modo: "limpo",
-        classe: "site-screen",
-        titulo: "Nossa Equipe — Colégio Áurea"
+        classe: "cc-screen",
+        titulo: "Ciência da Computação — Universidade Aura"
     },
 
     "/login": {
