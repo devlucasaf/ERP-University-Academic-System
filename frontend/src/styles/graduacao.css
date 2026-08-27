@@ -689,18 +689,20 @@
 }
 
 /* --- SUBNAVEGAÇÃO FIXA DO CURSO --- */
+/* --- FICA ABAIXO DO CABEÇALHO DO SITE, ENTÃO É RECUADA E MAIS BAIXA PARA NÃO PARECER UM SEGUNDO CABEÇALHO --- */
 .cc-subnav {
     position: sticky;
     top: 68px;
     z-index: 30;
-    background: color-mix(in srgb, var(--bg-surface) 92%, transparent);
+    background: color-mix(in srgb, var(--bg-body) 88%, transparent);
     backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
     animation: ccDescer .55s var(--cc-mola) both;
 }
 
 .cc-subnav-inner {
-    min-height: 56px;
+    min-height: 44px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -711,9 +713,9 @@
     display: inline-flex;
     align-items: center;
     gap: .5rem;
-    color: var(--text-primary);
-    font-size: .9rem;
-    font-weight: 800;
+    color: var(--text-muted);
+    font-size: .82rem;
+    font-weight: 600;
     white-space: nowrap;
 }
 
@@ -731,7 +733,7 @@
     position: relative;
     padding: .35rem 0;
     color: var(--text-muted);
-    font-size: .88rem;
+    font-size: .84rem;
     font-weight: 600;
     white-space: nowrap;
     transition: color .25s ease;
@@ -758,12 +760,6 @@
 .cc-subnav-link:hover::after,
 .cc-subnav-link.ativo::after {
     transform: scaleX(1);
-}
-
-.cc-subnav-cta {
-    min-height: 38px;
-    padding: .45rem .9rem;
-    font-size: .84rem;
 }
 
 /* --- BARRA DE PROGRESSO DA LEITURA --- */
@@ -1339,8 +1335,7 @@
         top: 60px;
     }
 
-    .cc-subnav-curso,
-    .cc-subnav-cta {
+    .cc-subnav-curso {
         display: none;
     }
 

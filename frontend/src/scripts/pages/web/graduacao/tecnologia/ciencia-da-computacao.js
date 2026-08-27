@@ -458,8 +458,18 @@ function configurarEfeitosDeScroll(raiz) {
     };
 
     atualizar();
-    window.addEventListener("scroll", agendar, { passive: true });
-    window.addEventListener("resize", agendar, { passive: true });
+    window.addEventListener(
+        "scroll",
+        agendar, {
+            passive: true
+        }
+    );
+    window.addEventListener(
+        "resize",
+        agendar, {
+            passive: true
+        }
+    );
 }
 
 // --- MARCA NA SUBNAVEGACAO A SECAO QUE ESTA SENDO LIDA ---
