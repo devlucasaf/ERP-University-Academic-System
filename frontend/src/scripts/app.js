@@ -57,7 +57,7 @@ const ROTAS = {
         titulo: "Nossa História — Colégio Áurea"
     },
 
-    "/graduacao/cursos": {
+    "/erpUniversity/app/graduacao/cursos.html": {
         modelo: "web/graduacao/cursos.html",
         modulo: () => import("./pages/web/graduacao/cursos.js"),
         publico: true,
@@ -66,7 +66,7 @@ const ROTAS = {
         titulo: "Cursos de Graduação — Universidade Aura"
     },
 
-    "/graduacao/cienciaDaComputacao": {
+    "/erpUniversity/app/graduacao/tecnologias/ciencia-da-computacao.html": {
         modelo: "web/graduacao/tecnologias/ciencia-da-computacao.html",
         modulo: () => import("./pages/web/graduacao/tecnologia/ciencia-da-computacao.js"),
         publico: true,
