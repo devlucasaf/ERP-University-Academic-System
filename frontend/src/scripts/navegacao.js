@@ -7,14 +7,18 @@ export function caminhoParaUrl(caminho) {
     return `${BASE_URL}${normalizado}`;
 }
 
-// --- RETORNA A ROTA INTERNA ATUAL, SEM O PREFIXO DA BASE ---
-export function caminhoAtual() {
-    const { pathname } = window.location;
+// --- CONVERTE UMA URL DO SITE NO CAMINHO INTERNO, SEM O PREFIXO DA BASE ---
+export function urlParaCaminho(pathname) {
     if (BASE_URL && pathname.startsWith(BASE_URL)) {
         const resto = pathname.slice(BASE_URL.length);
         return resto === "" ? "/" : resto;
     }
     return pathname || "/";
+}
+
+// --- RETORNA A ROTA INTERNA ATUAL, SEM O PREFIXO DA BASE ---
+export function caminhoAtual() {
+    return urlParaCaminho(window.location.pathname);
 }
 
 // --- NAVEGA PARA UMA ROTA INTERNA SEM RECARREGAR A PAGINA ---
@@ -42,6 +46,11 @@ export function reescreverLinksInternos(container) {
 
     container.querySelectorAll('[data-ir^="#/"]').forEach((elemento) => {
         elemento.setAttribute("data-ir", elemento.getAttribute("data-ir").slice(1));
+    });
+
+    // --- OS MODELOS SAO CARREGADOS COMO TEXTO, ENTAO O VITE NAO RESOLVE OS ASSETS ---
+    container.querySelectorAll('img[src^="/img/"]').forEach((imagem) => {
+        imagem.setAttribute("src", caminhoParaUrl(imagem.getAttribute("src")));
     });
 }
 
@@ -74,6 +83,6 @@ export function ativarInterceptacaoGlobal() {
         }
 
         evento.preventDefault();
-        navegarPara(url.pathname);
+        navegarPara(urlParaCaminho(url.pathname));
     });
 }

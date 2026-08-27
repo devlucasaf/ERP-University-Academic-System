@@ -1,5 +1,6 @@
 import { autenticar, dashboardDoPerfil } from "../../auth.js";
 import { notificar } from "../../util.js";
+import { navegarPara } from "../../navegacao.js";
 
 // --- LIGA O SUBMIT DO FORMULÁRIO ---
 export function montar(raiz) {
@@ -26,7 +27,7 @@ export function montar(raiz) {
         try {
             const usuario = await autenticar(email, senha);
             notificar(`Bem-vindo, ${usuario.nome}!`, "success");
-            location.hash = dashboardDoPerfil(usuario.role);
+            navegarPara(dashboardDoPerfil(usuario.role));
         } catch (erro) {
             mensagem.textContent = erro.message;
             mensagem.hidden = false;
