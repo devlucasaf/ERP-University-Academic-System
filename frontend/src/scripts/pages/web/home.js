@@ -1,5 +1,4 @@
 import { notificar } from "../../util.js";
-import { navegarPara } from "../../navegacao.js";
 
 const CHAVE_TEMA = "theme";
 
@@ -49,7 +48,7 @@ function configurarRolagemSuave(raiz, menu, burger) {
 function configurarBotoesPortal(raiz) {
     raiz.querySelectorAll("#btnPortal, #btnPortalHero, #btnPortalAlunos").forEach((botao) => {
         botao.addEventListener("click", () => {
-            navegarPara("/login");
+            location.hash = "#/login";
         });
     });
 }
@@ -179,6 +178,7 @@ function criarOndaDeTema(botao) {
 // --- MEGA-MENU ---
 function configurarMegaMenu(raiz) {
     const itens = raiz.querySelectorAll("[data-mega]");
+    const submenus = raiz.querySelectorAll("[data-submenu]");
 
     itens.forEach((item) => {
         const link = item.querySelector(".site-link-com-mega");
@@ -196,18 +196,40 @@ function configurarMegaMenu(raiz) {
         });
     });
 
-    // --- ESCAPE FECHA QUALQUER MEGA-MENU ABERTO ---
+    // --- SUBMENUS ANINHADOS ---
+    submenus.forEach((submenu) => {
+        const gatilho = submenu.querySelector(".site-mega-link-gatilho");
+
+        gatilho?.addEventListener("click", (evento) => {
+            const ehTouch = window.matchMedia("(hover: none)").matches;
+            if (ehTouch) {
+                evento.preventDefault();
+                const abrindo = !submenu.classList.contains("aberto");
+                fecharTodosSubmenus(submenus);
+                submenu.classList.toggle("aberto", abrindo);
+                gatilho.setAttribute("aria-expanded", String(abrindo));
+            }
+        });
+    });
+
+    // --- ESCAPE FECHA QUALQUER MEGA-MENU/SUBMENU ABERTO ---
     document.addEventListener("keydown", (evento) => {
         if (evento.key === "Escape") {
             fecharTodosMegaMenus(itens);
+            fecharTodosSubmenus(submenus);
         }
     });
 
     // --- CLIQUE FORA FECHA TAMBEM ---
     document.addEventListener("click", (evento) => {
-        const clicouDentro = evento.target.closest("[data-mega]");
-        if (!clicouDentro) {
+        const clicouDentroMega = evento.target.closest("[data-mega]");
+        const clicouDentroSubmenu = evento.target.closest("[data-submenu]");
+        if (!clicouDentroMega) {
             fecharTodosMegaMenus(itens);
+        }
+
+        if (!clicouDentroSubmenu) {
+            fecharTodosSubmenus(submenus);
         }
     });
 }
@@ -217,6 +239,14 @@ function fecharTodosMegaMenus(itens) {
     itens.forEach((item) => {
         item.classList.remove("aberto");
         item.querySelector(".site-link-com-mega")?.setAttribute("aria-expanded", "false");
+    });
+}
+
+// --- FECHA TODOS OS SUBMENUS ANINHADOS E RESETA aria-expanded ---
+function fecharTodosSubmenus(submenus) {
+    submenus.forEach((submenu) => {
+        submenu.classList.remove("aberto");
+        submenu.querySelector(".site-mega-link-gatilho")?.setAttribute("aria-expanded", "false");
     });
 }
 
