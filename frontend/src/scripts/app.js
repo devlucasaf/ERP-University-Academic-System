@@ -57,13 +57,40 @@ const ROTAS = {
         titulo: "Nossa História — Colégio Áurea"
     },
 
-    "/graduacao/ciencia-da-computacao": {
-        modelo: "web/graduacao/tecnologia/ciencia-da-computacao.html",
+    "/graduacao/cursos": {
+        modelo: "web/graduacao/cursos.html",
+        modulo: () => import("./pages/web/graduacao/cursos.js"),
+        publico: true,
+        modo: "limpo",
+        classe: "cc-screen",
+        titulo: "Cursos de Graduação — Universidade Aura"
+    },
+
+    "/graduacao/cienciaDaComputacao": {
+        modelo: "web/graduacao/tecnologias/ciencia-da-computacao.html",
         modulo: () => import("./pages/web/graduacao/tecnologia/ciencia-da-computacao.js"),
         publico: true,
         modo: "limpo",
         classe: "cc-screen",
         titulo: "Ciência da Computação — Universidade Aura"
+    },
+
+    "/graduacao/ciencia-da-computacao": {
+        modelo: "web/graduacao/tecnologias/ciencia-da-computacao.html",
+        modulo: () => import("./pages/web/graduacao/tecnologia/ciencia-da-computacao.js"),
+        publico: true,
+        modo: "limpo",
+        classe: "cc-screen",
+        titulo: "Ciência da Computação — Universidade Aura"
+    },
+
+    "/graduacao/ads": {
+        modelo: "web/graduacao/tecnologias/ads.html",
+        modulo: () => import("./pages/web/graduacao/tecnologia/ads.js"),
+        publico: true,
+        modo: "limpo",
+        classe: "cc-screen",
+        titulo: "Análise e Desenvolvimento de Sistemas — Universidade Aura"
     },
 
     "/login": {
@@ -297,4 +324,3 @@ aplicarTemaSalvo();
 ativarInterceptacaoGlobal();
 window.addEventListener("popstate", renderizar);
 window.addEventListener("DOMContentLoaded", renderizar);
-
