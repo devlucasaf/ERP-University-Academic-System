@@ -4,7 +4,6 @@ const CHAVE_TOKEN = "token";
 const CHAVE_REFRESH = "refreshToken";
 const CHAVE_USUARIO = "user";
 
-// --- MAPA DE REDIRECIONAMENTO PÓS-LOGIN POR PERFIL ---
 export const DASHBOARD_POR_PERFIL = {
     ALUNO: "/aluno/dashboard",
     PROFESSOR: "/professor/dashboard",

@@ -35,7 +35,6 @@ function ligarAnimacoes(raiz) {
     raiz.querySelector(".cc-page")?.classList.add("cc-anima");
 }
 
-// --- O USUÁRIO PEDIU MENOS MOVIMENTO NO SISTEMA OPERACIONAL? ---
 function preferemMenosMovimento() {
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }

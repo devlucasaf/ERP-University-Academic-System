@@ -1,5 +1,3 @@
-/* --- SITE INSTITUCIONAL --- */
-
 /* --- TELA CHEIA PARA O SITE --- */
 .site-screen {
     min-height: 100%;
@@ -130,7 +128,7 @@
 .site-burger.ativo span:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
 }
-/* --- BOTAO DE TEMA --- */
+/* --- BOTÃO DE TEMA --- */
 .site-tema-toggle {
     position: relative;
     width: 42px;
@@ -156,7 +154,7 @@
     box-shadow: 0 4px 12px rgba(30, 64, 175, .25);
 }
 
-/* --- CADA ICONE FICA EMPILHADO NO CENTRO --- */
+/* --- CADA ÍCONE FICA EMPILHADO NO CENTRO --- */
 .site-tema-icone {
     position: absolute;
     display: grid;
@@ -167,7 +165,7 @@
             opacity .4s ease;
 }
 
-/* --- SOL VISIVEL NO TEMA CLARO --- */
+/* --- SOL VISÍVEL NO TEMA CLARO --- */
 .site-tema-sol {
     color: var(--color-highlight);
     transform: rotate(0) scale(1);
@@ -180,7 +178,7 @@
     opacity: 0;
 }
 
-/* --- QUANDO NOTURNO INVERTE OS ICONES --- */
+/* --- QUANDO NOTURNO INVERTE OS ÍCONES --- */
 .site-tema-toggle.noturno .site-tema-sol {
     transform: rotate(90deg) scale(0);
     opacity: 0;
@@ -191,7 +189,7 @@
     opacity: 1;
 }
 
-/* --- ANIMACAO DE GIRO NO CLIQUE --- */
+/* --- ANIMAÇÃO DE GIRO NO CLIQUE --- */
 .site-tema-toggle.girando {
     animation: site-tema-girar .6s ease;
 }
@@ -314,7 +312,7 @@
     font-size: var(--fs-sm);
 }
 
-/* --- NOTICIAS EM DESTAQUE --- */
+/* --- NOTÍCIAS EM DESTAQUE --- */
 .site-noticias-hero {
     background:
             radial-gradient(1200px 400px at 80% -10%, rgba(30, 64, 175, .18), transparent),
@@ -478,7 +476,7 @@
     border-radius: 999px;
 }
 
-/* --- SECOES --- */
+/* --- SEÇÕES --- */
 .site-section {
     padding: calc(var(--space-xl) * 1.5) 0;
 }
@@ -551,7 +549,7 @@
     font-weight: 600;
 }
 
-/* --- COR DA BORDA SUPERIOR DOS CARDS DE NIVEL DE ENSINO --- */
+/* --- COR DA BORDA SUPERIOR DOS CARDS DE NÍVEL DE ENSINO --- */
 .site-card[data-cor="azul"]     {
     border-top: 4px solid var(--color-primary);
 }
@@ -689,7 +687,7 @@
     background: rgba(250, 204, 21, .22);
 }
 
-/* --- NOTICIAS --- */
+/* --- NOTÍCIAS --- */
 .site-news {
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
@@ -729,7 +727,7 @@
     margin-top: var(--space-xs);
 }
 
-/* --- FORMULARIO DE CONTATO --- */
+/* --- FORMULÁRIO DE CONTATO --- */
 .site-form .field {
     display: grid;
     gap: var(--space-xs);
@@ -777,7 +775,7 @@
     font-size: var(--fs-sm);
 }
 
-/* --- RODAPE --- */
+/* --- RODAPÉ --- */
 .site-footer {
     background: var(--bg-sidebar);
     color: var(--text-sidebar);
@@ -829,7 +827,7 @@
     color: #9ca3af;
 }
 
-/* --- BOTOES EXTRAS DO SITE --- */
+/* --- BOTÕES EXTRAS DO SITE --- */
 .btn-lg {
     padding: .7rem 1.4rem;
     font-size: 1rem;
@@ -846,8 +844,7 @@
     color: #fff;
 }
 
-/* --- ANIMACOES DO BOTAO AZUL DENTRO DO SITE --- */
-
+/* --- ANIMAÇÕES DO BOTÃO AZUL DENTRO DO SITE --- */
 .site .btn-primary {
     position: relative;
     overflow: hidden;
@@ -861,7 +858,7 @@
     will-change: transform;
 }
 
-/* --- BRILHO DIAGONAL QUE ATRAVESSA O BOTAO NO HOVER --- */
+/* --- BRILHO DIAGONAL QUE ATRAVESSA O BOTÃO NO HOVER --- */
 .site .btn-primary::before {
     content: "";
     position: absolute;
@@ -908,7 +905,7 @@
     animation: sitePulsoAzul 1.2s ease-out infinite;
 }
 
-/* --- FOCUS VISIVEL --- */
+/* --- FOCUS VISÍVEL --- */
 .site .btn-primary:focus-visible {
     outline: none;
     box-shadow:
@@ -930,13 +927,14 @@
         box-shadow: 0 0 0 0 rgba(37, 99, 235, .5);
         opacity: 1;
     }
+
     100% {
         box-shadow: 0 0 0 14px rgba(37, 99, 235, 0);
         opacity: 0;
     }
 }
 
-/* --- RESPEITAR PREFERENCIA DE USUARIO POR MENOS ANIMACAO --- */
+/* --- RESPEITAR PREFERÊNCIA DE USUÁRIO POR MENOS ANIMAÇÃO --- */
 @media (prefers-reduced-motion: reduce) {
     .site .btn-primary,
     .site .btn-primary::before,
@@ -1037,23 +1035,21 @@
     }
 }
 
-/* --- MEGA-MENU --- */
-
-/* --- CONTAINER DE CADA ITEM COM MEGA-MENU ---                 */
+/* --- CONTAINER DE CADA ITEM COM MEGA-MENU --- */
 .site-menu-item {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-/* --- LINK COM SETINHA PRA BAIXO ---                           */
+/* --- LINK COM SETINHA PRA BAIXO --- */
 .site-link-com-mega {
     display: inline-flex;
     align-items: center;
     gap: 4px;
 }
 
-/* --- SETINHA ---         */
+/* --- SETINHA --- */
 .site-link-seta {
     transition: transform .25s ease;
 }
@@ -1063,7 +1059,7 @@
     transform: rotate(180deg);
 }
 
-/* --- PAINEL DO MEGA-MENU ---            */
+/* --- PAINEL DO MEGA-MENU --- */
 .site-mega {
     position: absolute;
     top: calc(100% + 12px);
@@ -1089,7 +1085,7 @@
     z-index: 100;
 }
 
-/* --- MOSTRA O PAINEL NO HOVER OU FOCUS ---                    */
+/* --- MOSTRA O PAINEL NO HOVER OU FOCUS --- */
 .site-menu-item:hover .site-mega,
 .site-menu-item:focus-within .site-mega,
 .site-menu-item.aberto .site-mega {
@@ -1099,7 +1095,7 @@
     transform: translateX(-50%) translateY(0);
 }
 
-/* --- PONTE INVISIVEL ENTRE O LINK E O PAINEL ---              */
+/* --- PONTE INVISÍVEL ENTRE O LINK E O PAINEL --- */
 .site-mega::before {
     content: "";
     position: absolute;
@@ -1109,7 +1105,7 @@
     height: 12px;
 }
 
-/* --- GRADE DE SUB-LINKS ---                                    */
+/* --- GRADE DE SUB-LINKS --- */
 .site-mega-grade {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1150,7 +1146,7 @@
     color: var(--color-primary);
 }
 
-/* --- CARD DE DESTAQUE DO LADO DIREITO ---                     */
+/* --- CARD DE DESTAQUE DO LADO DIREITO --- */
 .site-mega-destaque {
     display: flex;
     flex-direction: column;
@@ -1196,9 +1192,7 @@
     transform: translateX(3px);
 }
 
-/* --- ESCONDE MEGA-MENU NO MOBILE ---                          */
-/* No mobile o menu vira uma lista vertical - mega-menu nao faz  */
-/* sentido. Sub-links ficam so nas paginas internas.            */
+/* --- ESCONDE MEGA-MENU NO MOBILE --- */
 @media (max-width: 900px) {
     .site-mega,
     .site-link-seta {
@@ -1213,8 +1207,6 @@
         width: 100%;
     }
 }
-
-/* --- PAGINAS INTERNAS DO SITE --- */
 
 /* --- LINK ATIVO NA NAVBAR --- */
 .site-link-atual {
@@ -1252,7 +1244,7 @@
     font-weight: 600;
 }
 
-/* --- HERO DAS PAGINAS INTERNAS --- */
+/* --- HERO DAS PÁGINAS INTERNAS --- */
 .site-pagina-hero {
     padding: calc(var(--space-xl) * 1.2) 0 var(--space-xl);
     background:
@@ -1273,7 +1265,7 @@
     line-height: 1.6;
 }
 
-/* --- CTA FINAL DAS PAGINAS --- */
+/* --- CTA FINAL DAS PÁGINAS --- */
 .site-cta-final {
     text-align: center;
     max-width: 640px;
@@ -1290,7 +1282,6 @@
 }
 
 /* --- TIMELINE --- */
-
 .site-timeline {
     list-style: none;
     position: relative;
@@ -1398,8 +1389,7 @@
     }
 }
 
-/* --- NUMEROS EM DESTAQUE --- */
-
+/* --- NÚMEROS EM DESTAQUE --- */
 .site-numeros {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1446,7 +1436,6 @@
 }
 
 /* --- EQUIPE --- */
-
 .site-equipe-filtros {
     display: flex;
     flex-wrap: wrap;
@@ -1573,7 +1562,7 @@
     color: #1a1a1a;
 }
 
-/* --- INFO DO PROFISSIONAL --- */
+/* --- INFORMAÇÃO DO PROFISSIONAL --- */
 .site-equipe-info {
     flex: 1;
     min-width: 0;
@@ -1593,7 +1582,7 @@
     line-height: 1.3;
 }
 
-/* --- ANIMACAO DE ENTRADA DOS CARDS --- */
+/* --- ANIMAÇÃO DE ENTRADA DOS CARDS --- */
 @keyframes siteFadeIn {
     from {
         opacity: 0;
