@@ -92,8 +92,8 @@
     display: inline-flex;
     align-items: center;
     gap: .45rem;
-    color: var(--color-primary);
-    background: var(--cc-blue-soft);
+    color: var(--cc-primary, var(--color-primary));
+    background: var(--cc-primary-soft, var(--cc-blue-soft));
     border: 1px solid rgba(59, 130, 246, .16);
     border-radius: 999px;
     padding: .4rem .8rem;
@@ -144,11 +144,11 @@
 
 .cc-btn-primary {
     color: #fff;
-    background: var(--color-primary);
+    background: var(--cc-primary, var(--color-primary));
 }
 
 .cc-btn-primary:hover {
-    background: var(--color-primary-hover);
+    background: var(--cc-primary-hover, var(--color-primary-hover));
 }
 
 .cc-btn-outline {
@@ -229,7 +229,7 @@
 
 .cc-stat strong {
     display: block;
-    color: var(--color-primary);
+    color: var(--cc-primary, var(--color-primary));
     font-size: 1.45rem;
     line-height: 1.2;
 }
@@ -283,8 +283,8 @@
     place-items: center;
     margin-bottom: 1rem;
     border-radius: 12px;
-    color: var(--color-primary);
-    background: var(--cc-blue-soft);
+    color: var(--cc-primary, var(--color-primary));
+    background: var(--cc-primary-soft, var(--cc-blue-soft));
 }
 
 .cc-card h3 {
@@ -350,7 +350,7 @@
     height: 7px;
     flex: 0 0 7px;
     border-radius: 50%;
-    background: var(--color-primary);
+    background: var(--cc-primary, var(--color-primary));
 }
 
 .cc-career {
@@ -656,14 +656,34 @@
     color: var(--curso-cor, var(--color-primary));
 }
 
-/* --- PERSONALIZAÇÃO DE CORES DOS CURSOS --- */
-.cc-page[style*="--cc-primary: #059669;"] .cc-btn-primary,
-.cc-page[style*="--cc-primary: #059669;"] .cc-stat strong,
-.cc-page[style*="--cc-primary: #059669;"] .cc-eyebrow,
-.cc-page[style*="--cc-primary: #059669;"] .cc-subject::before {
-    background-color: var(--cc-primary);
-    color: var(--cc-primary);
+/* --- FILTRO POR ÁREA DE ATUAÇÃO NA PÁGINA DE CURSOS --- */
+.cursos-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    justify-content: center;
+    margin-bottom: var(--space-md);
 }
+
+.cursos-contador {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+    font-size: .9rem;
+}
+
+.cursos-vazio {
+    text-align: center;
+    padding: var(--space-xl) 0;
+    color: var(--text-muted);
+}
+
+/* --- CARD OCULTO PELO FILTRO ATIVO --- */
+.curso-card[hidden] {
+    display: none;
+}
+
+/* --- PERSONALIZAÇÃO DE CORES DOS CURSOS --- */
+/* --- CADA PÁGINA DE CURSO DEFINE --cc-primary NA .cc-page E OS ESTILOS BASE HERDAM O ACCENT --- */
 
 .cc-page .cc-cta {
     background: linear-gradient(135deg, rgba(30,64,175,.96), rgba(59,130,246,.88));
@@ -671,7 +691,7 @@
 
 .cc-page .cc-cta .cc-btn {
     background: #fff;
-    color: #1e40af;
+    color: var(--cc-primary, #1e40af);
 }
 
 .cc-page {
@@ -709,7 +729,7 @@
 }
 
 .cc-subnav-curso svg {
-    color: var(--color-primary);
+    color: var(--cc-primary, var(--color-primary));
 }
 
 .cc-subnav-links {
@@ -736,14 +756,15 @@
     bottom: -2px;
     height: 2px;
     border-radius: 2px;
-    background: linear-gradient(90deg, var(--color-primary), #60a5fa);
+    /* --- CADA CURSO PODE DEFINIR --cc-primary NA .cc-page; SEM ISSO, CAI NO AZUL PADRÃO --- */
+    background: linear-gradient(90deg, var(--cc-primary, var(--color-primary)), #60a5fa);
     transform: scaleX(0);
     transition: transform .3s var(--cc-mola);
 }
 
 .cc-subnav-link:hover,
 .cc-subnav-link.ativo {
-    color: var(--color-primary);
+    color: var(--cc-primary, var(--color-primary));
 }
 
 .cc-subnav-link:hover::after,
