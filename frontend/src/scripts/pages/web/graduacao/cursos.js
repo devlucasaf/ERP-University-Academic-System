@@ -14,6 +14,57 @@ export function montar(raiz) {
     configurarBotoesPortal(raiz);
     configurarMegaMenu(raiz);
     configurarRolagemSuave(raiz);
+    configurarFiltroPorArea(raiz);
+}
+
+// --- FILTRA OS CARDS PELA ÁREA DE ATUAÇÃO MARCADA EM data-area ---
+function configurarFiltroPorArea(raiz) {
+    const botoes = Array.from(raiz.querySelectorAll(".cursos-filtros .site-filtro-btn"));
+    const cards = Array.from(raiz.querySelectorAll(".curso-card"));
+
+    if (botoes.length === 0 || cards.length === 0) {
+        return;
+    }
+
+    const contador = raiz.querySelector("#cursosContador");
+    const vazio = raiz.querySelector("#cursosVazio");
+
+    const aplicar = (filtro) => {
+        let visiveis = 0;
+
+        cards.forEach((card) => {
+            const combina = filtro === "todos" || card.dataset.area === filtro;
+            card.hidden = !combina;
+            if (combina) {
+                visiveis++;
+            }
+        });
+
+        if (contador) {
+            contador.textContent = visiveis === 1
+                ? "1 curso encontrado"
+                : `${visiveis} cursos encontrados`;
+        }
+
+        if (vazio) {
+            vazio.hidden = visiveis > 0;
+        }
+    };
+
+    botoes.forEach((botao) => {
+        botao.addEventListener("click", () => {
+            botoes.forEach((b) => {
+                b.classList.remove("ativo");
+                b.setAttribute("aria-selected", "false");
+            });
+            botao.classList.add("ativo");
+            botao.setAttribute("aria-selected", "true");
+
+            aplicar(botao.dataset.filtro);
+        });
+    });
+
+    aplicar("todos");
 }
 
 // --- ABRE E FECHA O MENU HAMBURGER NO MOBILE ---

@@ -76,7 +76,7 @@ const ROTAS = {
     },
 
     "/graduacao/ciencia-da-computacao": {
-        modelo: "web/graduacao/tecnologias/ciencia-da-computacao.html",
+        modelo: "web/graduacao/tecnologia/ciencia-da-computacao.html",
         modulo: () => import("./pages/web/graduacao/tecnologia/ciencia-da-computacao.js"),
         publico: true,
         modo: "limpo",
@@ -84,13 +84,58 @@ const ROTAS = {
         titulo: "Ciência da Computação — Universidade Aura"
     },
 
-    "/graduacao/ads": {
-        modelo: "web/graduacao/tecnologias/ads.html",
-        modulo: () => import("./pages/web/graduacao/tecnologia/ads.js"),
+    "/graduacao/analise-e-desenvolvimento-de-sistemas": {
+        modelo: "web/graduacao/tecnologia/analise-e-desenvolvimento-de-sistemas.html",
+        modulo: () => import("./pages/web/graduacao/tecnologia/analise-e-desenvolvimento-de-sistemas.js"),
         publico: true,
         modo: "limpo",
         classe: "cc-screen",
         titulo: "Análise e Desenvolvimento de Sistemas — Universidade Aura"
+    },
+
+    "/graduacao/engenharia-de-software": {
+        modelo: "web/graduacao/tecnologia/engenharia-de-software.html",
+        modulo: () => import("./pages/web/graduacao/tecnologia/engenharia-de-software.js"),
+        publico: true,
+        modo: "limpo",
+        classe: "cc-screen",
+        titulo: "Engenharia de Software — Universidade Aura"
+    },
+
+    "/graduacao/ciencia-de-dados": {
+        modelo: "web/graduacao/tecnologia/ciencia-de-dados.html",
+        modulo: () => import("./pages/web/graduacao/tecnologia/ciencia-de-dados.js"),
+        publico: true,
+        modo: "limpo",
+        classe: "cc-screen",
+        titulo: "Ciência de Dados — Universidade Aura"
+    },
+
+    "/graduacao/engenharia-mecatronica": {
+        modelo: "web/graduacao/engenharia/engenharia-mecatronica.html",
+        modulo: () => import("./pages/web/graduacao/engenharia/engenharia-mecatronica.js"),
+        publico: true,
+        modo: "limpo",
+        classe: "cc-screen",
+        titulo: "Engenharia Mecatrônica — Universidade Aura"
+    },
+
+    "/graduacao/administracao": {
+        modelo: "web/graduacao/negocios/administracao.html",
+        modulo: () => import("./pages/web/graduacao/negocio/administracao.js"),
+        publico: true,
+        modo: "limpo",
+        classe: "cc-screen",
+        titulo: "Engenharia Mecatrônica — Universidade Aura"
+    },
+
+    "/matriculas": {
+        modelo: "web/matriculas.html",
+        modulo: () => import("./pages/web/matriculas.js"),
+        publico: true,
+        modo: "limpo",
+        classe: "cc-screen",
+        titulo: "Matrículas — Universidade Aura"
     },
 
     "/login": {
