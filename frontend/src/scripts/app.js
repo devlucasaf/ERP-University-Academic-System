@@ -49,8 +49,8 @@ const ROTAS = {
 
     // --- PAGINAS INTERNAS DO SITE INSTITUCIONAL ---
     "/web/sobre/historia": {
-        modelo: "web/sobre/historia.html",
-        modulo: () => import("./pages/web/sobre/historia.js"),
+        modelo: "web/sobre/nossa-historia.html",
+        modulo: () => import("./pages/web/sobre/nossa-historia.js"),
         publico: true,
         modo: "limpo",
         classe: "site-screen",
@@ -120,13 +120,31 @@ const ROTAS = {
         titulo: "Engenharia Mecatrônica — Universidade Aura"
     },
 
+    "/graduacao/engenharia-civil": {
+        modelo: "web/graduacao/engenharia/engenharia-civil.html",
+        modulo: () => import("./pages/web/graduacao/engenharia/engenharia-civil.js"),
+        publico: true,
+        modo: "limpo",
+        classe: "cc-screen",
+        titulo: "Engenharia Civil — Universidade Aura"
+    },
+
     "/graduacao/administracao": {
-        modelo: "web/graduacao/negocios/administracao.html",
+        modelo: "web/graduacao/negocio/administracao.html",
         modulo: () => import("./pages/web/graduacao/negocio/administracao.js"),
         publico: true,
         modo: "limpo",
         classe: "cc-screen",
-        titulo: "Engenharia Mecatrônica — Universidade Aura"
+        titulo: "Administração — Universidade Aura"
+    },
+
+    "/graduacao/direito": {
+        modelo: "web/graduacao/humanas/direito.html",
+        modulo: () => import("./pages/web/graduacao/humanas/direito.js"),
+        publico: true,
+        modo: "limpo",
+        classe: "cc-screen",
+        titulo: "Direito — Universidade Aura"
     },
 
     "/matriculas": {

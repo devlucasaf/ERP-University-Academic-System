@@ -1,4 +1,4 @@
-import { navegarPara } from "../../../../navegacao.js";
+import { navegarPara } from "../../../navegacao.js";
 
 const CHAVE_TEMA = "theme";
 

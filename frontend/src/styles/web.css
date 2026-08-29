@@ -810,6 +810,13 @@
     font-size: var(--fs-sm);
 }
 
+/* --- BOTÃO DE AÇÃO ABAIXO DA GRADE DE CARDS --- */
+.site-cards-acao {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-lg);
+}
+
 /* --- RODAPÉ --- */
 .site-footer {
     background: var(--bg-sidebar);
