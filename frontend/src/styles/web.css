@@ -741,6 +741,7 @@
 }
 
 .site-form input,
+.site-form select,
 .site-form textarea {
     width: 100%;
     padding: .65rem .85rem;
@@ -753,10 +754,44 @@
 }
 
 .site-form input:focus,
+.site-form select:focus,
 .site-form textarea:focus {
     outline: 0;
     border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgba(30, 64, 175, .18);
+}
+
+/* --- FORMULÁRIO DE MATRÍCULA: DOIS CAMPOS POR LINHA NO DESKTOP --- */
+.site-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+}
+
+@media (max-width: 720px) {
+    .site-form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- O ACEITE DOS TERMOS FICA EM LINHA, AO CONTRÁRIO DOS DEMAIS CAMPOS --- */
+.site-form-termos {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    font-weight: 400;
+    font-size: var(--fs-sm);
+}
+
+.site-form-termos input {
+    width: auto;
+    margin-top: .2rem;
+    flex: 0 0 auto;
+}
+
+.site-form-erro {
+    color: var(--color-danger, #dc2626);
+    font-size: var(--fs-sm);
 }
 
 .site-form {
